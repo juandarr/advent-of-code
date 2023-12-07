@@ -1,3 +1,4 @@
+from time import time
 def read_file(filename):
     return open(filename, "r")
 
@@ -24,7 +25,9 @@ def parseInformation(lines):
     return seedsRanges, mapping
 
 if __name__=='__main__': 
+    initialTime = time()
     test =  False
+
     if test:
         filename = "day5-test-input.txt"
     else:
@@ -56,21 +59,21 @@ if __name__=='__main__':
                 if int(s[1])>int(ranges[0]) + int(ranges[1]) -1:
                     # print('outside to the right', s, ranges)
                     tmp.append(inputRanges[c])
-                #intersection to the left - works?
+                #intersection to the left - works
                 if int(s[1])<int(ranges[0]) and int(s[1])+int(s[2])-1 < int(ranges[0])+ int(ranges[1])-1 and int(s[1])+int(s[2])-1 >= int(ranges[0]):
                     dif = int(ranges[0])- int(s[1])
                     tmp.append([int(s[1])+int(s[2]), int(ranges[0]) +int(ranges[1]) -int(s[1])-int(s[2])])
                     outputRanges.append([int(s[0])+dif, int(s[1])+int(s[2])-int(ranges[0])])
                     # print('Intersection to the left: ',s, ranges)
                     # print('Here are changes: ', tmp[-1], outputRanges[-1])
-                #intersection to the right - works?
+                #intersection to the right - works
                 if int(s[1])+int(s[2])-1 > int(ranges[0])+int(ranges[1])-1 and int(s[1]) <= int(ranges[0])+ int(ranges[1])-1 and int(s[1]) > int(ranges[0]):
                     dif = int(ranges[0])+int(ranges[1])-int(s[1])
                     tmp.append([int(ranges[0]), int(ranges[1]) - dif])
                     outputRanges.append([int(s[0]), dif])
                     # print('Intersection to the right: ',s, ranges)
                     # print('Here are changes: ', tmp[-1], outputRanges[-1])
-                #inside the range - works?
+                #inside the range - works
                 if int(s[1]) >= int(ranges[0]) and int(s[1])+int(s[2])-1<= int(ranges[0])+int(ranges[1])-1:
                     if int(s[1])- int(ranges[0])>0:
                         tmp.append([int(ranges[0]), int(s[1])- int(ranges[0])])
@@ -99,4 +102,6 @@ if __name__=='__main__':
     for ranges in outputRanges:
         if ranges[0] < minVal:
             minVal = ranges[0]
+    span = time() - initialTime 
     print(minVal)
+    print('It took: {0} seconds'.format(span))
