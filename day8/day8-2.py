@@ -32,8 +32,6 @@ def primeDecomposition(number):
         div += 2
     return primes
 
-    
-
 if __name__=='__main__': 
     test = False
     if test:
