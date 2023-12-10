@@ -44,10 +44,10 @@ if __name__=='__main__':
             levels.append(cur)
             allZeroes = checkZeroes(cur)
         c = len(levels)-2
-        levels[-1].append(0)
+        extra = []
+        extra.append(0)
         while c>=0:
-            levels[c].append(levels[c+1][-1]+levels[c][-1])
+            extra.append(extra[-1]+levels[c][-1])
             c -=1
-        net += levels[0][-1]
-        print(levels[0][-1])
+        net += extra[-1]
     print(net)

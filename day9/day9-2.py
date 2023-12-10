@@ -1,5 +1,3 @@
-'''
-'''
 def read_file(filename):
     file = open(filename,'r')
     return file.readlines()
@@ -19,7 +17,7 @@ def checkZeroes(ar):
     return allZeroes
 
 if __name__=='__main__': 
-    test = False
+    test =False 
     testNumber= 1
     if test:
         filename = "day9-test-input{0}.txt".format(testNumber)
@@ -44,9 +42,10 @@ if __name__=='__main__':
             levels.append(cur)
             allZeroes = checkZeroes(cur)
         c = len(levels)-2
-        levels[-1].insert(0,0)
+        extra = []
+        extra.append(0)
         while c>=0:
-            levels[c].insert(0,-levels[c+1][0]+levels[c][0])
+            extra.append(-extra[-1]+levels[c][0])
             c -=1
-        net += levels[0][0]
+        net += extra[-1]
     print(net)
