@@ -4,11 +4,12 @@ def read_file(filename):
 
 def parseInformation(lines):
     m =[]
+    expansion = 2 
     # Read lines and expand by rows
     for line in lines:
         tmp = line.strip()
         if tmp == '.'*len(tmp):
-            for _ in range(2):
+            for _ in range(expansion):
                 m.append(list(tmp))
         else:
             m.append(list(tmp))
@@ -26,8 +27,8 @@ def parseInformation(lines):
                 break
         if allDots:
             for i in range(len(expanded)):
-                expanded[i].append('.')
-                expanded[i].append('.')
+                for _ in range(expansion):
+                    expanded[i].append('.')
         else:
             for i in range(len(expanded)):
                 expanded[i].append(m[i][j])

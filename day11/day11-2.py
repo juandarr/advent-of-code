@@ -7,7 +7,9 @@ def parseInformation(lines):
     r= []
     # Read lines 
     row= 0
-    expansion =1 
+    expansionFactor = 10**6 
+    # The effective expansion, since the original row and column are preserved
+    expansion = expansionFactor-1
     for line in lines:
         tmp = line.strip()
         if tmp == '.'*len(tmp):
@@ -34,7 +36,7 @@ def parseInformation(lines):
     return m,galaxies
 
 if __name__=='__main__': 
-    test = True
+    test =False
     if test:
         filename = "day11-test-input.txt"
     else:
