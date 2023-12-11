@@ -1,5 +1,3 @@
-'''
-'''
 def read_file(filename):
     file = open(filename,'r')
     return file.readlines()
