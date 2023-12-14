@@ -65,7 +65,10 @@ if __name__=='__main__':
     m= parseInformation(lines)
     net = 0
     for row in m:
-        path = row[0]
-        sequence = row[1]
+        path = row[0].copy()
+        sequence = row[1].copy()
+        for _ in range(4):
+            path += ['?']+ row[0].copy()
+            sequence += row[1].copy()
         net += findSequence(path, sequence)
     print(net)
