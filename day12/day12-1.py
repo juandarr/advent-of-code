@@ -9,7 +9,7 @@ def parseInformation(lines):
         tmp = line.strip().split()
         m.append([list(tmp[0]),tmp[1].split(',') ])
     return m
-
+mem = {}
 def findSequence(path, sequence):
     if sequence == []:
         valid =True

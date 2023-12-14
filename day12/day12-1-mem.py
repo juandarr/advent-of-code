@@ -1,5 +1,3 @@
-from time import time
-
 def read_file(filename):
     file = open(filename,'r')
     return file.readlines()
@@ -11,6 +9,7 @@ def parseInformation(lines):
         tmp = line.strip().split()
         m.append([list(tmp[0]),tmp[1].split(',') ])
     return m
+
 mem = {}
 
 def findSequence(path, sequence):
@@ -38,16 +37,16 @@ def findSequence(path, sequence):
         elif path[c]=='.':
             if l==seqVal:
                 s = findSequence(path[c+1:],sequence[1:])
-                mem[key] = s
-                return s
+                mem[key] =s
+                return s 
             elif l>0 and l<seqVal:
                 break
         elif path[c]=='?':
             if l==seqVal:
                 path[c]='.'
-                s = findSequence(path[c+1:], sequence[1:])
-                mem[key] = s
-                return s
+                s =findSequence(path[c+1:], sequence[1:])
+                mem[key] =s
+                return s 
             elif l==0:
                 net = 0
                 for s in ['.','#']:
@@ -67,7 +66,7 @@ def findSequence(path, sequence):
     return 0
 
 if __name__=='__main__': 
-    test = False
+    test =False
     if test:
         filename = "day12-test-input.txt"
     else:
@@ -75,14 +74,8 @@ if __name__=='__main__':
     lines = read_file(filename)
     m= parseInformation(lines)
     net = 0
-    t0 = time()
     for row in m:
-        path = row[0].copy() 
-        sequence = row[1].copy()
-        for _ in range(4):
-            path +=  row[0].copy()
-            sequence += row[1].copy()
+        path = row[0]
+        sequence = row[1]
         net += findSequence(path, sequence)
-    t = time() - t0
-    print('It took {0} seconds'.format(t))
     print(net)
