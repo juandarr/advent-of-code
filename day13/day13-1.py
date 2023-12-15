@@ -24,16 +24,17 @@ def findMirror(pattern):
         while (e>i):
             if pattern[i]==pattern[e] and (i==0 or e==len(pattern)-1):
                 iTmp = i
+                eTmp = e
                 lines = []
-                while (pattern[iTmp]==pattern[e]):
-                    if (e-iTmp)==1:
+                while (pattern[iTmp]==pattern[eTmp]):
+                    if (eTmp-iTmp)==1:
                         lines.append(iTmp)
                         mirrorFound =True
                         break
                     else:
                         lines.append(iTmp)
                     iTmp += 1
-                    e -= 1
+                    eTmp -= 1
             if mirrorFound:
                 break
             e -= 1 
@@ -51,20 +52,21 @@ def findMirror(pattern):
             colE = ''.join([pattern[i][e] for i in range(len(pattern))])
             if colJ==colE and (j==0 or e==len(pattern[0])-1):
                 jTmp = j
+                eTmp = e
                 cols = []
                 while (colJ==colE):
-                    if (e-jTmp)==1 :
+                    if (eTmp-jTmp)==1 :
                         cols.append(jTmp)
                         mirrorFound =True
                         break
                     else:
                         cols.append(jTmp)
                     jTmp += 1
-                    e -= 1
-                    if (jTmp-e==0):
+                    eTmp -= 1
+                    if (jTmp-eTmp==0):
                         break
                     colJ = ''.join([pattern[i][jTmp] for i in range(len(pattern))])
-                    colE = ''.join([pattern[i][e] for i in range(len(pattern))])
+                    colE = ''.join([pattern[i][eTmp] for i in range(len(pattern))])
             if mirrorFound:
                 break
             e -= 1 
@@ -85,11 +87,12 @@ if __name__=='__main__':
     patterns= parseInformation(lines)
     net = 0
     for pattern in patterns:
-        mirror = findMirror(pattern)
+        mirrors = findMirror(pattern)
+        # print(pattern,mirrors)
         max = ['x',-float('inf')]
-        for m in mirror:
-            if mirror[m]> max[1]:
-                max = [m, mirror[m]]
+        for m in mirrors:
+            if mirrors[m]> max[1]:
+                max = [m, mirrors[m]]
         if max[0]=='v':
             net += max[1]
         else:
