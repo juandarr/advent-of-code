@@ -1,6 +1,6 @@
 # import sys
 # sys.setrecursionlimit(10**5)
-from time import sleep, time
+from time import sleep,time
 
 def read_file(filename):
     file = open(filename,'r')
@@ -27,7 +27,8 @@ def changeDir(d, mirror):
         tmp = (-1*d[1], -1*d[0])
     return tuple(tmp)
 
-def runBeam(m, start, dir,visited):
+
+def runBeam(m, start, dir, visited):
     i = start[0] 
     j = start[1]
     curDir = dir
@@ -50,8 +51,8 @@ def runBeam(m, start, dir,visited):
     return visited 
 
 if __name__=='__main__': 
-    test = False
-    testNumber = 9
+    test =False
+    testNumber = 1
     if test:
         filename = "day16-test{0}-input.txt".format(testNumber)
     else:
@@ -59,13 +60,47 @@ if __name__=='__main__':
     file = read_file(filename)
     m = parseInformation(file)
     t0 = time()
-    startDir = (0,1)
-    start=[0,0]
-    visited = set()
-    visited = runBeam(m,start,startDir,visited)
-    final = set()
-    for i in visited:
-        final.add(i[0])
-    print(len(final))
-    t =time()-t0
+    netMax = -float('inf')
+    for j in range(len(m[0])):
+        start=[0,j]
+        startDir = (1,0)
+        visited = set()
+        visited = runBeam(m,start,startDir,visited)
+        final = set()
+        for i in visited:
+            final.add(i[0])
+        if len(final)>netMax:
+            netMax = len(final)
+    for j in range(len(m[0])):
+        start=[len(m)-1,j]
+        startDir = (-1,0)
+        visited = set()
+        visited = runBeam(m,start,startDir,visited)
+        final = set()
+        for i in visited:
+            final.add(i[0])
+        if len(final)>netMax:
+            netMax = len(final)
+    for i in range(len(m)):
+        start=[i,0]
+        startDir = (0,1)
+        visited = set()
+        visited = runBeam(m,start,startDir,visited)
+        final = set()
+        for i in visited:
+            final.add(i[0])
+        if len(final)>netMax:
+            netMax = len(final)
+    for i in range(len(m)):
+        start=[i,len(m[0])-1]
+        startDir = (0,-1)
+        visited = set()
+        visited = runBeam(m,start,startDir,visited)
+        final = set()
+        for i in visited:
+            final.add(i[0])
+        if len(final)>netMax:
+            netMax = len(final)
+    print(netMax)
+    t =time() - t0
     print('Total duration (secs): {0}'.format(t))
