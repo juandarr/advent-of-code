@@ -34,27 +34,26 @@ def runBeam(m, start, dir):
     j = start[1]
     curDir = dir
     while inLimits(i,j) and ((i,j),curDir) not in visited:
+        visited.add(((i,j),curDir))
         if m[i][j]!='.':
             if m[i][j] in ['|','-']:
                 if m[i][j]=='|' and curDir in [(0,1),(0,-1)]:
-                    visited.union(runBeam(m,[i,j],(-1,0)))
-                    visited.union(runBeam(m,[i,j],(1,0)))
+                    visited.union(runBeam(m,[i-1,j],(-1,0)))
+                    visited.union(runBeam(m,[i+1,j],(1,0)))
                     break
                 if m[i][j]=='-' and curDir in [(1,0),(-1,0)]:
-                    visited.union(runBeam(m,[i,j],(0,1)))
-                    visited.union(runBeam(m,[i,j],(0,-1)))
+                    visited.union(runBeam(m,[i,j+1],(0,1)))
+                    visited.union(runBeam(m,[i,j-1],(0,-1)))
                     break
             else:
                 curDir = changeDir(curDir, m[i][j])
-        visited.add(((i,j),curDir))
         i += curDir[0]
         j += curDir[1]
-        print((i,j))
     return visited 
 
 if __name__=='__main__': 
     test = False
-    testNumber = 2
+    testNumber = 9
     if test:
         filename = "day16-test{0}-input.txt".format(testNumber)
     else:
@@ -67,6 +66,4 @@ if __name__=='__main__':
     final = set()
     for i in visited:
         final.add(i[0])
-    print(final,len(final))
-# Too low: 5990
-# Too low: 6005
+    print(len(final))
