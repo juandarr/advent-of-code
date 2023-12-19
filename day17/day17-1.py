@@ -1,4 +1,5 @@
 from time import sleep, time
+import heapq
 
 def read_file(filename):
     file = open(filename,'r')
@@ -17,33 +18,34 @@ def inLimits(i,j,m):
         return False
     return True
 
-def explore(m, minM):
-    start = (0,0)
-    next = []
-    next.append((start,((0,1),1)))
-    next.append((start,((1,0),1)))
-    visited = set() 
-    while next!=[]:
-        location = next.pop()
-        curNode = location[0]
-        curDir = location[1][0]
-        directions = (curDir,(curDir[1],curDir[0]),(-1*curDir[1], -1*curDir[0]))
-        visited.add((curNode, (curDir, location[1][1])))
-        for d in directions:
+def explore(starts, m, minM):
+    toExpand = []
+    for start in starts:
+        heapq.heappush(toExpand, start)
+    visited = set()
+    t0 = time()
+    while toExpand:
+        curEnergy, curNode, curDir, steps = heapq.heappop(toExpand)
+        if (curNode, curDir, steps) in visited:
+            continue
+        visited.add((curNode, curDir,steps))
+        dir = (curDir, (curDir[1],curDir[0]),(-1*curDir[1], -1*curDir[0]))
+        for d in dir:
             nextNode =(curNode[0]+d[0], curNode[1]+d[1])
-            sameDir = 1
-            if d==curDir:
-                sameDir += location[1][1]
-            if not(inLimits(nextNode[0],nextNode[1],m)) or sameDir>3 or (nextNode,(d,sameDir)) in visited:
-                continue
-            tmp = minM[curNode[0]][curNode[1]]+int(m[nextNode[0]][nextNode[1]])
+            straight = 1
+            if curDir==d:
+                straight +=steps 
+            if not(inLimits(nextNode[0],nextNode[1],m)) or straight>3: 
+                continue    
+            tmp = curEnergy+ int(m[nextNode[0]][nextNode[1]])
             if tmp<minM[nextNode[0]][nextNode[1]]:
                 minM[nextNode[0]][nextNode[1]] = tmp
-                next.append((nextNode,(d,sameDir)))
-    print(minM)
+            heapq.heappush(toExpand,(tmp,nextNode,d, straight))
+    return minM[len(m)-1][len(m[0])-1]
+    t = time()-t0
 
 if __name__=='__main__': 
-    test = True
+    test =False
     testNumber = 1
     if test:
         filename = "day17-test{0}-input.txt".format(testNumber)
@@ -57,8 +59,12 @@ if __name__=='__main__':
         minM.append([])
         for j in range(len(m[0])):
             minM[i].append(float('inf'))
-    minM[0][0] = int(0)
-    print(m)
-    explore(m,minM)
+    minM[0][0] = 0
+    m[0][0]= 0
+    minM[0][1]= int(m[0][1])
+    minM[1][0]= int(m[1][0])
+    s = explore(((int(m[0][1]),(0,1),(0,1),1),(int(m[1][0]),(1,0),(1,0),1)),m, minM)
     t =time()-t0
+    print(minM)
+    print(s)
     print('Total duration (secs): {0}'.format(t))
