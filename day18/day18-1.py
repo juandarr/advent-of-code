@@ -12,7 +12,34 @@ def parseInformation(lines):
         m.append(list(line.strip().split()))
     return m
 
+'''
+Finds when a given edge location/region is the entry/exit point to the interior
+'''
+def isWallPresent(i,j,ground):
+    arc = [0,0]
+    if i+1< len(ground):
+        if ground[i+1][j]=='#':
+            arc[1]=1
+    if i-1 >=0:
+        if ground[i-1][j]=='#':
+            arc[0]=1
+    while (ground[i][j]=='#'):
+        j+=1
+        if (j>=len(ground[0])):
+            break
+    j -=1
+    if i+1< len(ground):
+        if ground[i+1][j]=='#':
+            arc[1]=1
+    if i-1 >=0:
+        if ground[i-1][j]=='#':
+            arc[0]=1
+    if arc==[1,1]:
+        return True,j
+    return False,j
+
 def dig(start,m, groundDug):
+    # Find the ground edge based on intructions
     groundDug.add(start)
     i,j = start
     lim_i =[0,0] 
@@ -34,6 +61,7 @@ def dig(start,m, groundDug):
                 lim_j[0] = j
             elif (j>lim_j[1]):
                 lim_j[1] = j
+    # Create the ground edge in a matrix form
     ground = []
     i_calibration = -lim_i[0]
     j_calibration = -lim_j[0]
@@ -43,6 +71,7 @@ def dig(start,m, groundDug):
             ground[-1].append('.')
     for s in groundDug:
         ground[s[0]+i_calibration][s[1]+j_calibration] = '#'
+    # Fill the ground
     i = 0 
     count = 0
     while (i<len(ground)):
@@ -54,53 +83,19 @@ def dig(start,m, groundDug):
                 if ground[i][j]=='.':
                     tmp +=1
                 if ground[i][j]=='#':
-                    arc = [0,0]
-                    if i+1< len(ground):
-                        if ground[i+1][j]=='#':
-                            arc[1]=1
-                    if i-1 >=0:
-                        if ground[i-1][j]=='#':
-                            arc[0]=1
-                    while (ground[i][j]=='#'):
-                        j+=1
-                        if (j>=len(ground[0])):
-                            break
-                    j -=1
-                    if i+1< len(ground):
-                        if ground[i+1][j]=='#':
-                            arc[1]=1
-                    if i-1 >=0:
-                        if ground[i-1][j]=='#':
-                            arc[0]=1
-                    if arc==[1,1]:
+                    wallPresent, j = isWallPresent(i,j,ground)
+                    if wallPresent:
                         open = False
                         count += tmp
             else:
                 if ground[i][j]=='#':
-                    arc = [0,0]
-                    if i+1< len(ground):
-                        if ground[i+1][j]=='#':
-                            arc[1]=1
-                    if i-1 >=0:
-                        if ground[i-1][j]=='#':
-                            arc[0]=1
-                    while (ground[i][j]=='#'):
-                        j+=1
-                        if (j>=len(ground[0])):
-                            break
-                    j -= 1
-                    if i+1< len(ground):
-                        if ground[i+1][j]=='#':
-                            arc[1]=1
-                    if i-1 >=0:
-                        if ground[i-1][j]=='#':
-                            arc[0]=1
-                    if arc==[1,1]:
+                    wallPresent, j = isWallPresent(i,j,ground)
+                    if wallPresent:
                         open = True
                         tmp = 0
             j+=1
         i+= 1
-    print(count+len(groundDug))
+    return count+len(groundDug)
 
 if __name__=='__main__': 
     test = False
@@ -111,9 +106,6 @@ if __name__=='__main__':
         filename = "day18-1-input.txt"
     lines = read_file(filename)
     m = parseInformation(lines)
-    # print(m)
     groundDug = set()
-    dig((0,0), m, groundDug)
-    # print(groundDug)
-#58970: answer is too high
-#46360: answer is too low
+    area = dig((0,0), m, groundDug)
+    print(area)
