@@ -23,9 +23,10 @@ def explore(starts, m, minM):
     for start in starts:
         heapq.heappush(toExpand, start)
     visited = set()
-    t0 = time()
     while toExpand:
         curEnergy, curNode, curDir, steps = heapq.heappop(toExpand)
+        if curNode==(len(m)-1, len(m[0])-1):
+            return curEnergy
         if (curNode, curDir, steps) in visited:
             continue
         visited.add((curNode, curDir,steps))
@@ -43,8 +44,6 @@ def explore(starts, m, minM):
             if tmp<minM[nextNode[0]][nextNode[1]]:
                 minM[nextNode[0]][nextNode[1]] = tmp
             heapq.heappush(toExpand,(tmp,nextNode,d, straight))
-    return minM[len(m)-1][len(m[0])-1]
-    t = time()-t0
 
 if __name__=='__main__': 
     test = False
@@ -65,6 +64,7 @@ if __name__=='__main__':
     m[0][0]= 0
     minM[0][1]= int(m[0][1])
     minM[1][0]= int(m[1][0])
+    t0 = time()
     s = explore(((int(m[0][1]),(0,1),(0,1),1),(int(m[1][0]),(1,0),(1,0),1)),m, minM)
     t =time()-t0
     print(minM)
