@@ -71,6 +71,8 @@ def dig(start,m, groundDug):
             ground[-1].append('.')
     for s in groundDug:
         ground[s[0]+i_calibration][s[1]+j_calibration] = '#'
+    for g in ground:
+        print(''.join(g))
     # Fill the ground
     i = 0 
     count = 0
@@ -98,7 +100,7 @@ def dig(start,m, groundDug):
     return count+len(groundDug)
 
 if __name__=='__main__': 
-    test = False
+    test = True
     testNumber = 1
     if test:
         filename = "day18-test{0}-input.txt".format(testNumber)
