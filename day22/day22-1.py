@@ -34,50 +34,93 @@ def exploreFall(bricks):
                 lev[level][label] = True
             else:
                 lev[level] = {label: True}
+    print(lev)
     movingDown = True
-    curLevel = minLev  
-    while (movingDown and curLevel<=maxLev):
+    while (movingDown) :
         movingDown = False
-        if curLevel in lev:
-            for b in lev[curLevel]:
-                brick = bricks[lev[curLevel][b]]
-                goesBelow = True
-                belowLevel = curLevel -1
-                if belowLevel>0:
-                    if belowLevel in lev:
-                        for bBelow in lev[belowLevel]:
-                            brickBelow = lev[belowLevel][bBelow]
-                            for idx in range(2):
-                                m = list(range(max(brick[0][idx],brickBelow[0][idx]), min(brick[1][idx], brickBelow[1][idx])))
-                                if m==[]:
-                                    continue 
-                                else:
-                                    goesBelow =False
+        curLevel = 2
+        print('Starting loop: ',curLevel, maxLev)
+        while curLevel<=maxLev:
+            belowLevel = curLevel -1
+            goingDown = []
+            if curLevel in lev:
+                for b in lev[curLevel]:
+                    brick = bricks[b]
+                    if belowLevel>0:
+                        goesBelow = True
+                        blocked = [False, False]
+                        if belowLevel in lev:
+                            for bBelow in lev[belowLevel]:
+                                brickBelow = bricks[bBelow]
+                                for idx in range(2):
+                                    m = list(range(max(brick[0][idx],brickBelow[0][idx]), min(brick[1][idx], brickBelow[1][idx])+1))
+                                    if m!=[]:
+                                        blocked[idx]= True
+                                    if blocked[0]==True and blocked[1]==True:
+                                        goesBelow =False
+                                        break
+                                if not(goesBelow):
                                     break
-                            if not(goesBelow):
+                    else:
+                        break
+                    if goesBelow:
+                        movingDown  = True
+                        l = curLevel
+                        while (l<=maxLev):
+                            if l in lev:
+                                if b in lev[l]:
+                                    goingDown.append((b,l))
+                            else:
                                 break
+                            l +=1
+            if len(goingDown)>0:
+                for val in goingDown:
+                    b = val[0]
+                    level = val[1]
+                    lowLevel = level-1
+                    del lev[level][b]
+                    if lev[level]=={}:
+                        del lev[level]
+                    if lowLevel in lev:
+                        lev[lowLevel][b] =True
                     else:
-                        lev[belowLevel] = {b:True}
-                        del lev[curLevel][b]
-                        goesBelow = False
-                        movingDown = True
-                else:
-                    break
-                if goesBelow:
-                    movingDown  = True
-                    del lev[curLevel][b]
-                    if belowLevel in lev:
-                        lev[belowLevel][b] =True
-                    else:
-                        lev[belowLevel] = {b:True}
-        else:
+                        lev[lowLevel] = {b:True}
             curLevel +=1
-    return lev, [minLev, maxLev]
+    print(lev)
+    c = 1
+    counter =0
+    while (c+1 in lev):
+        for b in lev[c]:
+            toTest = lev[c].copy()
+            del toTest[b]
+            for bAbove in lev[c+1]:
+                brick = bricks[bAbove]
+                goesBelow = True
+                blocked = [False, False]
+                for bBelow in toTest:
+                    brickBelow = bricks[bBelow]
+                    for idx in range(2):
+                        m = list(range(max(brick[0][idx],brickBelow[0][idx]), min(brick[1][idx], brickBelow[1][idx])+1))
+                        if m!=[]:
+                            blocked[idx] = True 
+                        if blocked[0]==True and blocked[1]==True:
+                            goesBelow = False
+                            break
+                if (goesBelow):
+                    break
+            if goesBelow:
+                print('CanNOT remove: ',b)
+            else:
+                print('Can remove: ',b)
+                counter +=1
+        c +=1
+    counter+=len(lev[c])
+    return  counter
 
 
 if __name__=='__main__': 
-    test = True
-    testNumber = 1
+    test = False
+    testNumber = 3
     if test:
         filename = "day22-test{0}-input.txt".format(testNumber)
     else:
@@ -85,5 +128,7 @@ if __name__=='__main__':
     lines = read_file(filename)
     bricks = parseInformation(lines)
     print(bricks, len(bricks))
-    levs, limits = exploreFall(bricks)
-    print(levs, limits)
+    p = exploreFall(bricks)
+    print(p)
+# Too high: 1473
+# Too high: 878
