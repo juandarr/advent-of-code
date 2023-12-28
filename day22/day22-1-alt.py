@@ -14,7 +14,7 @@ def parseInformation(lines):
         for point in points:
             x,y,z = point.split(',')
             p.append([int(x), int(y), int(z)])
-        bricks[c] =[[p[0][0], p[1][0]], [p[0][1], p[1][1]], [p[0][2], p[1][2]]]
+        bricks[c] =p
         c+=1
     return  bricks
 
@@ -24,7 +24,7 @@ def exploreFall(bricks):
     maxLev = -float('inf') 
     for label in bricks:
         brick = bricks[label]
-        levels = list(range(brick[2][0], brick[2][1]+1))
+        levels = list(range(brick[0][-1], brick[1][-1]+1))
         for level in levels:
             if level<minLev:
                 minLev = level
@@ -35,7 +35,6 @@ def exploreFall(bricks):
             else:
                 lev[level] = {label: True}
     print(lev)
-
     movingDown = True
     while (movingDown) :
         movingDown = False
@@ -47,20 +46,23 @@ def exploreFall(bricks):
             if curLevel in lev:
                 for b in lev[curLevel]:
                     brick = bricks[b]
-                    goesBelow = True
-                    blocked = [False, False]
-                    if belowLevel in lev:
-                        for bBelow in lev[belowLevel]:
-                            brickBelow = bricks[bBelow]
-                            for idx in range(2):
-                                m = list(range(max(brick[idx][0],brickBelow[idx][0]), min(brick[idx][1], brickBelow[idx][1])+1))
-                                if m!=[]:
-                                    blocked[idx]= True
-                                if blocked[0]==True and blocked[1]==True:
-                                    goesBelow =False
+                    if belowLevel>0:
+                        goesBelow = True
+                        blocked = [False, False]
+                        if belowLevel in lev:
+                            for bBelow in lev[belowLevel]:
+                                brickBelow = bricks[bBelow]
+                                for idx in range(2):
+                                    m = list(range(max(brick[0][idx],brickBelow[0][idx]), min(brick[1][idx], brickBelow[1][idx])+1))
+                                    if m!=[]:
+                                        blocked[idx]= True
+                                    if blocked[0]==True and blocked[1]==True:
+                                        goesBelow =False
+                                        break
+                                if not(goesBelow):
                                     break
-                            if not(goesBelow):
-                                break
+                    else:
+                        break
                     if goesBelow:
                         movingDown  = True
                         l = curLevel
@@ -85,7 +87,6 @@ def exploreFall(bricks):
                         lev[lowLevel] = {b:True}
             curLevel +=1
     print(lev)
-
     c = 1
     counter =0
     while (c+1 in lev):
@@ -99,13 +100,13 @@ def exploreFall(bricks):
                 for bBelow in toTest:
                     brickBelow = bricks[bBelow]
                     for idx in range(2):
-                        m = list(range(max(brick[idx][0],brickBelow[idx][0]), min(brick[idx][1], brickBelow[idx][1])+1))
+                        m = list(range(max(brick[0][idx],brickBelow[0][idx]), min(brick[1][idx], brickBelow[1][idx])+1))
                         if m!=[]:
                             blocked[idx] = True 
                         if blocked[0]==True and blocked[1]==True:
                             goesBelow = False
                             break
-                if goesBelow:
+                if (goesBelow):
                     break
             if goesBelow:
                 print('CanNOT remove: ',b)
@@ -118,17 +119,13 @@ def exploreFall(bricks):
 
 
 if __name__=='__main__': 
-    test =False
-    testNumber = 6
+    test = False
+    testNumber = 3
     '''
     Answers to tests
     1: 5
     2: 3
-    3: 2 
-    4: 4
-    5: 3
-    6: 2
-    7: 3
+    3: 4 
     '''
     if test:
         filename = "day22-test{0}-input.txt".format(testNumber)
