@@ -1,4 +1,5 @@
 from time import sleep, time
+from copy import deepcopy
 
 def read_file(filename):
     file = open(filename,'r')
@@ -34,13 +35,11 @@ def exploreFall(bricks):
                 lev[level][label] = True
             else:
                 lev[level] = {label: True}
-    print(lev)
 
     movingDown = True
     while (movingDown) :
         movingDown = False
         curLevel = 2
-        print('Starting loop: ',curLevel, maxLev)
         while curLevel<=maxLev:
             belowLevel = curLevel -1
             goingDown = []
@@ -85,7 +84,6 @@ def exploreFall(bricks):
                         lev[lowLevel] = {b:True}
             curLevel +=1
     print(lev)
-
     c = 1
     counter =0
     while (c+1 in lev):
@@ -102,15 +100,11 @@ def exploreFall(bricks):
                         m = list(range(max(brick[idx][0],brickBelow[idx][0]), min(brick[idx][1], brickBelow[idx][1])+1))
                         if m!=[]:
                             blocked[idx] = True 
-                        if blocked[0]==True and blocked[1]==True:
-                            goesBelow = False
-                            break
-                if goesBelow:
+                if blocked[0]==True and blocked[1]==True:
+                    goesBelow =False 
+                else:
                     break
-            if goesBelow:
-                print('CanNOT remove: ',b)
-            else:
-                print('Can remove: ',b)
+            if not(goesBelow):
                 counter +=1
         c +=1
     counter+=len(lev[c])
@@ -118,8 +112,8 @@ def exploreFall(bricks):
 
 
 if __name__=='__main__': 
-    test =False
-    testNumber = 6
+    test =True
+    testNumber =7 
     '''
     Answers to tests
     1: 5
@@ -136,7 +130,7 @@ if __name__=='__main__':
         filename = "day22-1-input.txt"
     lines = read_file(filename)
     bricks = parseInformation(lines)
-    print(bricks, len(bricks))
+    # print(bricks, len(bricks))
     p = exploreFall(bricks)
     print(p)
 # Too high: 1473
