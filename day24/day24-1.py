@@ -11,11 +11,34 @@ def parseInformation(lines):
         hailstones.append(tmp)
     return hailstones
 
-def findEstimate(hailstones):
-    return
+def findEstimate(hailstones, limits):
+    i = 0
+    c= 0
+    while i<len(hailstones)-1:
+        p1 = hailstones[i]
+        j = i+1
+        while j<len(hailstones):
+            p2 = hailstones[j]
+            m = -1*p2['vel'][1]/p2['vel'][0]
+            num = m*(p2['pos'][0]-p1['pos'][0])+p2['pos'][1]-p1['pos'][1]
+            den = p1['vel'][1]+m*p1['vel'][0]
+            if den!=0: 
+                t1 = num/den
+                num = p1['vel'][1]*t1-p2['pos'][1]+p1['pos'][1]
+                den = p2['vel'][1]
+                if den!=0:
+                    t2 = num/den
+                    if (t1>0 and t2>0):
+                        x = p1['vel'][0]*t1+p1['pos'][0]
+                        y = p1['vel'][1]*t1+p1['pos'][1]
+                        if x>=limits[0] and x<=limits[1] and y>=limits[0] and y<=limits[1]:
+                            c+=1
+            j +=1
+        i+=1
+    return c
 
 if __name__=='__main__': 
-    test = True
+    test = False
     testNumber =1 
     '''
     Answers to tests
@@ -27,4 +50,8 @@ if __name__=='__main__':
         filename = "day24-1-input.txt"
     lines = read_file(filename)
     hailstones = parseInformation(lines)
-    print(hailstones)
+    # Test
+    # limits = [7,27]
+    limits= [200000000000000, 400000000000000]
+    c= findEstimate(hailstones,limits)
+    print('Estimate: ', c)
