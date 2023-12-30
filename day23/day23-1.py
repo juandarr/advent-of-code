@@ -42,13 +42,19 @@ def createGraph(origin,m,graph):
     if len(path)==1:
         cur = path[0]
         if cur[0]==len(m)-1:
-            graph[origin]=[[cur,cost]]
+            if origin in graph:
+                graph[origin][cur] = -cost
+            else:
+                graph[origin]={cur: -cost}
             return 
         elif m[cur[0]][cur[1]] in endPoints:
             i = cur[0] + endPoints[m[cur[0]][cur[1]]][0]
             j = cur[1] + endPoints[m[cur[0]][cur[1]]][1]
             cost+=1
-            graph[origin]=[[(i,j),cost]]
+            if origin in graph:
+                graph[origin][(i,j)] = -cost
+            else:
+                graph[origin]={(i,j): -cost}
             createGraph((i,j),m,graph)
     else:
         cost +=1
@@ -57,9 +63,9 @@ def createGraph(origin,m,graph):
             i = cur[0] + endPoints[m[cur[0]][cur[1]]][0]
             j = cur[1] + endPoints[m[cur[0]][cur[1]]][1]
             if origin in graph:
-                graph[origin].append([(i,j),cost])
+                graph[origin][(i,j)] = -cost
             else:
-                graph[origin]=[[(i,j),cost]]
+                graph[origin]={(i,j): -cost}
             createGraph((i,j),m,graph)
 
 def shortestPath(graph,origin):
@@ -70,26 +76,26 @@ def shortestPath(graph,origin):
     for node in graph:
         cost[node] =float('inf')
     cost[origin] = 0
-    cost[(22,21)] = float('inf')
+    cost[(len(m)-1,len(m[0])-2)] = float('inf')
     while toExplore:
         tmp = heapq.heappop(toExplore)
+        print(tmp)
         curCost = tmp[0]
         curNode = tmp[1]
-        if curNode==(22,21):
-            break
+        # if curNode==(len(m)-1,len(m[0])-2):
+        #     break
         visited[curNode] = 1
-        for pair in graph[curNode]: 
-            node = pair[0]
-            c = pair[1]
+        for node in graph[curNode]: 
+            c = graph[curNode][node]
             newCost = curCost+c
             if cost[node]>newCost:
                 cost[node] = newCost
-            if node not in visited:
-                heapq.heappush(toExplore,(newCost, node))
+            if node!=(len(m)-1,len(m[0])-2):
+                heapq.heappush(toExplore,(cost[node], node))
     return cost
 
 if __name__=='__main__': 
-    test =True
+    test = True
     testNumber =1 
     '''
     Answers to tests
@@ -105,13 +111,6 @@ if __name__=='__main__':
     origin = (0,1)
     graph= {}
     createGraph(origin,m,graph)
-    # Graph is in format: source:[[dest1, cost1], [dest2, cost2],...]
-    # print(len(graph))
-    # endPoints = {'>':(0,1),'<':(0,-1),'^':(-1,0), 'v':(1,0)}
-    # ed =set()
-    # for i in range(len(m)):
-    #     for j in range(len(m[0])):
-    #         if m[i][j] in endPoints:
-    #             ed.add((i+endPoints[m[i][j]][0], j+endPoints[m[i][j]][1]))
+    print(graph)
     p = shortestPath(graph,origin)
     print(p)
