@@ -1,6 +1,5 @@
 from time import sleep, time
 from copy import deepcopy
-import heapq
 
 def read_file(filename):
     file = open(filename,'r')

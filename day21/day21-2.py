@@ -1,6 +1,6 @@
 from time import sleep, time
 from copy import deepcopy
-import heapq
+import numpy as np
 
 def read_file(filename):
     file = open(filename,'r')
@@ -37,31 +37,9 @@ def steps(s,step, m, dir, limit):
         branches = tmp
         step +=1
     return len(tmp) 
-    
-# def stepsIn(steps,m,dir):
-#     for s in range(2,steps+1):
-#         for i in range(len(m)):
-#             for j in range(len(m[0])):
-#                 diag = []
-#                 if m[i][j] in ['.', 'S']:
-#                     tmp = 0
-#                     for d in dir:
-#                         i_tmp = i+dir[d][0]
-#                         j_tmp = j+dir[d][1]
-#                         if m[i_tmp%len(m)][j_tmp%len(m[0])] in ['.','S']:
-#                             tmp += mem[((i_tmp%len(m), j_tmp%len(m[0])), s-1)]
-#                             diag.append((i_tmp,j_tmp))
-#                     for idx,p in enumerate(diag):
-#                         l = idx+1
-#                         while (l<len(diag)):
-#                             if abs(diag[l][0]-p[0])+abs(diag[l][1]-p[1])==2:
-#                                 tmp -=1
-#                             l +=1
-#                     mem[((i, j),s)] =tmp
-#                     print(s, tmp )
 
 if __name__=='__main__': 
-    test =True
+    test = False
     testNumber = 1
     if test:
         filename = "day21-test{0}-input.txt".format(testNumber)
@@ -70,23 +48,18 @@ if __name__=='__main__':
     lines = read_file(filename)
     m,start = parseInformation(lines)
     dir = {'n':(-1,0), 's':(1,0), 'e':(0,1), 'w': (0,-1)}
-    for s in range(2,20):
-        val = steps(start, 1,m,dir,s)
-        print('\n',start,s, ': ',val, (s+1)**2)
-        for d in dir:
-            i = start[0]+dir[d][0]
-            j = start[1]+dir[d][1]
-            val2 = steps((i,j), 1,m,dir,s-1)
-            print((i,j), s-1, ': ', val2)
-    # mem ={}
-    # for i in range(len(m)):
-    #     for j in range(len(m[0])):
-    #         diag = []
-    #         if m[i][j] in ['.', 'S']:
-    #             for d in dir:
-    #                 i_tmp = i+dir[d][0]
-    #                 j_tmp = j+dir[d][1]
-    #                 if m[i_tmp%len(m)][j_tmp%len(m[0])] in ['.','S']:
-    #                     diag.append((i_tmp,j_tmp))
-    #             mem[((i, j),1)] = len(diag)
-    # stepsIn(10**6,m,dir)
+    points = []
+    for s in range(3):
+        val = steps(start, 1,m,dir,s*131+65)
+        points.append([s,val])
+    A = np.zeros((3,3))
+    B = np.zeros((3,1))
+    for i in range(3):
+        A[i,0]=(points[i][0])**2
+        A[i,1]=points[i][0]
+        A[i,2]=1
+        B[i,0] = points[i][1]
+    sol = np.linalg.solve(A,B)
+    val = int(26501365/131)
+    answer  = int(sol[0,0])*val*val + int(sol[1,0])*val + int(sol[2,0])
+    print(answer)
