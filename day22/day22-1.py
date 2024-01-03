@@ -19,6 +19,34 @@ def parseInformation(lines):
         c+=1
     return  bricks
 
+def printLevel(lev, bricks, maxLevel):
+    labels = {1:'A', 2:'B', 3:'C', 4:'D', 5:'E', 6: 'F', 7:'G', 8:'H' , 9:'I', 10:'J', 11:'K'}
+    c = 0
+    mx = []
+    my = []
+    while c<=maxLevel:
+        mx.append( list('.'*8))
+        my.append( list('.'*8))
+        if c in lev:
+            for l in lev[c]:
+                for x in range(bricks[l][0][0], bricks[l][0][1]+1):
+                    if mx[-1][x] != '.': 
+                        mx[-1][x] = '?'
+                    else:
+                        mx[-1][x] = labels[l]
+                for y in range(bricks[l][1][0], bricks[l][1][1]+1):
+                    if my[-1][y] != '.': 
+                        my[-1][y] = '?'
+                    else:
+                        my[-1][y] = labels[l]
+        c+=1
+    print('\nx vs z : \n')
+    for i in reversed(mx):
+        print(''.join(i))
+    print('\ny vs z : \n')
+    for i in reversed(my):
+        print(''.join(i))
+
 def exploreFall(bricks):
     lev = {}
     minLev = float('inf') 
@@ -35,7 +63,8 @@ def exploreFall(bricks):
                 lev[level][label] = True
             else:
                 lev[level] = {label: True}
-
+    print('Initial state: ',lev)
+    printLevel(lev, bricks,maxLev)
     movingDown = True
     while (movingDown) :
         movingDown = False
@@ -83,7 +112,8 @@ def exploreFall(bricks):
                     else:
                         lev[lowLevel] = {b:True}
             curLevel +=1
-    print(lev)
+    print('End state: ',lev)
+    printLevel(lev, bricks,maxLev)
     c = 1
     counter =0
     while (c+1 in lev):
@@ -110,10 +140,9 @@ def exploreFall(bricks):
     counter+=len(lev[c])
     return  counter
 
-
 if __name__=='__main__': 
-    test =True
-    testNumber =7 
+    test = True
+    testNumber =1 
     '''
     Answers to tests
     1: 5
@@ -130,7 +159,7 @@ if __name__=='__main__':
         filename = "day22-1-input.txt"
     lines = read_file(filename)
     bricks = parseInformation(lines)
-    # print(bricks, len(bricks))
+    print(bricks)
     p = exploreFall(bricks)
     print(p)
 # Too high: 1473
