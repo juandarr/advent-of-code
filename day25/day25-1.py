@@ -1,4 +1,5 @@
-import heapq
+import random
+from copy import deepcopy
 
 def read_file(filename):
     file = open(filename,'r')
@@ -6,53 +7,90 @@ def read_file(filename):
 
 def parseInformation(lines):
     # Read lines and extract every position and velocity for each hailstone
-    nodes ={} 
+    graph ={} 
     for line in lines:
         tmp = line.strip().split(':')
-        nodes[tmp[0]] = list(tmp[1].strip().split())
+        graph[tmp[0]] = list(tmp[1].strip().split())
     # From this list of nodes create graph
     new = {}
-    for node in nodes:
-        for i in nodes[node]:
-            if i not in nodes:
+    for node in graph:
+        for i in graph[node]:
+            if i not in graph:
                 if i not in new:
                     new[i] = [node]
                 else:
                     new[i].append(node)
             else:
-                if node not in nodes[i]:
-                    nodes[i].append(node)
+                if node not in graph[i]:
+                    graph[i].append(node)
     for node in new:
-        nodes[node] = new[node]
-    return nodes 
+        graph[node] = new[node]
 
-def findGroups(nodes):
-    start = 'jqt'
-    toExplore = [start]
-    visited ={}
-    while (toExplore):
-        tmp = heapq.heappop(toExplore)
-        level = tmp[0]
-        curNode = tmp[1]
-        print(tmp)
-        visited[curNode] =level
-        for node in nodes[curNode]:
-            heapq.heappush(toExplore,(level+1,node))
-    print(visited, len(visited))
-    return
+    return graph 
+
+def getEdges(graph):
+    edges = []
+    for node in graph:
+        for node2 in graph[node]:
+            edges.append((node, node2))
+    return edges
+
+def contraction(graph, edge):
+    newVertex = ''.join(edge)
+    nodes = []
+    # print('Before: ',graph, edge)
+    for e in edge:
+        for node in graph[e]:
+            if node not in edge:
+                nodes.append(node)
+    for node in graph:
+        if node not in edge:
+            if edge[0] in graph[node]:
+                indexes = [i for i,x in enumerate(graph[node]) if x==edge[0]]
+                for idx in indexes:
+                    graph[node][idx] = newVertex
+            if edge[1] in graph[node]:
+                indexes = [i for i,x in enumerate(graph[node]) if x==edge[1]]
+                for idx in indexes:
+                    graph[node][idx] = newVertex
+    del graph[edge[0]]
+    del graph[edge[1]]
+    graph[newVertex] = nodes
+    # print('After: ',graph, edge)
+
+def kargerAlgorithm(graph):
+    # print('Before: \n','Graph: ', graph, '\nEdges: ', edges)
+    while len(graph)>2:
+        edges = getEdges(graph)
+        random_idx = random.choice(range(len(edges))) 
+        edge  = edges[random_idx]
+        # print(random_idx, edge)
+        contraction(graph, edge)
+        # print('After: \n','Graph: ', graph, '\nEdges: ', edges)
+    edges = getEdges(graph)
+    # print('After: \n','Graph: ', graph, '\nEdges: ', len(edges))
+    print(len(edges))
+    if len(edges)==6:
+        net = 1
+        for node in graph:
+            net *= len(node)//3 
+        print('Result!: ', net)
 
 if __name__=='__main__': 
-    test = True
+    test = False
     testNumber =1 
     '''
     Answers to tests
-    1: 54 
+    1: 54 - minCut is 3 
+    2: 3 - minCut is 2
     '''
     if test:
         filename = "day25-test{0}-input.txt".format(testNumber)
     else:
         filename = "day25-1-input.txt"
     lines = read_file(filename)
-    nodes = parseInformation(lines)
-    print(nodes)
-    findGroups(nodes)
+    graph = parseInformation(lines)
+    for i in range(500):
+        print(i)
+        graph_cp = deepcopy(graph)
+        kargerAlgorithm(graph_cp)
