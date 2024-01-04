@@ -1,8 +1,9 @@
 from time import sleep, time
 import heapq
 import sys
+from copy import deepcopy
 
-sys.setrecursionlimit(10000)
+sys.setrecursionlimit(100000)
 
 def read_file(filename):
     file = open(filename,'r')
@@ -15,12 +16,53 @@ def parseInformation(lines):
         m.append(list(line.strip()))
     return m 
 
-def createGraph(origin,m,graph):
+def isNode(node, m):
     endPoints = {'>':(0,1),'<':(0,-1),'^':(-1,0), 'v':(1,0)}
-    cur = origin
-    cost = 0
-    visited = {origin:1}
+    i = node[0]
+    j = node[1]
+    isNode = True
+    for d in endPoints:
+        newI = i + endPoints[d][0]
+        newJ = j + endPoints[d][1]
+        if newI<0 or newI>=len(m) or newJ<0 or newJ>=len(m[0]):
+            continue
+        if m[newI][newJ]=='.':
+            isNode= False
+            break
+    return isNode
+
+def createGraph(origin,aim,m,graph):
+    endPoints = {'>':(0,1),'<':(0,-1),'^':(-1,0), 'v':(1,0)}
+    cur = (origin[0]+endPoints[aim][0],origin[1]+endPoints[aim][1])
+    cost = 1
+    visited = {origin:1, cur:1}
     while True:
+        path = []
+        if cur==(0,1):
+            return
+        for dir in endPoints:
+            d = endPoints[dir]
+            i = cur[0]+d[0]
+            j = cur[1]+d[1]
+            if m[i][j]=='#' or (i,j) in visited:
+                continue
+            path.append((i,j))
+        cost +=1
+        cur = path[0]
+        visited[cur]=1
+        if cur[0]==len(m)-1 or isNode(cur,m):
+            break
+    cur = path[0]
+    if origin in graph:
+        if cur in graph[origin]:
+            return
+        else:
+            graph[origin][cur] = -cost
+    else:
+        graph[origin]={cur: -cost}
+    if cur[0]==len(m)-1:
+        return 
+    else:
         path = []
         for dir in endPoints:
             d = endPoints[dir]
@@ -28,78 +70,42 @@ def createGraph(origin,m,graph):
             j = cur[1]+d[1]
             if m[i][j]=='#' or (i,j) in visited:
                 continue
-            elif m[i][j] in endPoints:
-                if endPoints[m[i][j]]==(-1*d[0],-1*d[1]):
-                    continue
-            path.append((i,j))
-        cost +=1
-        if len(path)>1 or m[path[0][0]][path[0][1]] in endPoints:
-            break
-        cur = path[0]
-        visited[cur]=1
-        if cur[0]==len(m)-1:
-            break
-    if len(path)==1:
-        cur = path[0]
-        if cur[0]==len(m)-1:
-            if origin in graph:
-                graph[origin][cur] = -cost
-            else:
-                graph[origin]={cur: -cost}
-            return 
-        elif m[cur[0]][cur[1]] in endPoints:
-            i = cur[0] + endPoints[m[cur[0]][cur[1]]][0]
-            j = cur[1] + endPoints[m[cur[0]][cur[1]]][1]
-            cost+=1
-            if origin in graph:
-                graph[origin][(i,j)] = -cost
-            else:
-                graph[origin]={(i,j): -cost}
-            createGraph((i,j),m,graph)
-    else:
-        cost +=1
+            path.append((cur,dir))
         for p in path:
-            cur = p
-            i = cur[0] + endPoints[m[cur[0]][cur[1]]][0]
-            j = cur[1] + endPoints[m[cur[0]][cur[1]]][1]
-            if origin in graph:
-                graph[origin][(i,j)] = -cost
-            else:
-                graph[origin]={(i,j): -cost}
-            createGraph((i,j),m,graph)
+            createGraph(p[0],p[1],m,graph)
 
 def shortestPath(graph,origin):
     toExplore = []
-    heapq.heappush(toExplore, (0,origin))
-    visited = {}
+    heapq.heappush(toExplore, (0,origin,{}))
     cost = {}
     for node in graph:
         cost[node] =float('inf')
     cost[origin] = 0
     cost[(len(m)-1,len(m[0])-2)] = float('inf')
     while toExplore:
+        print(len(toExplore))
         tmp = heapq.heappop(toExplore)
-        print(tmp)
         curCost = tmp[0]
         curNode = tmp[1]
-        # if curNode==(len(m)-1,len(m[0])-2):
-        #     break
+        visited = deepcopy(tmp[2])
         visited[curNode] = 1
         for node in graph[curNode]: 
             c = graph[curNode][node]
+            if node in visited:
+                continue
             newCost = curCost+c
             if cost[node]>newCost:
                 cost[node] = newCost
             if node!=(len(m)-1,len(m[0])-2):
-                heapq.heappush(toExplore,(cost[node], node))
+                heapq.heappush(toExplore,(newCost, node, visited))
     return cost
 
 if __name__=='__main__': 
-    test = False
+    test =False
     testNumber =1 
     '''
     Answers to tests
-    1: 94 
+    1: 154
     '''
     if test:
         filename = "day23-test{0}-input.txt".format(testNumber)
@@ -107,10 +113,8 @@ if __name__=='__main__':
         filename = "day23-1-input.txt"
     lines = read_file(filename)
     m = parseInformation(lines)
-    print(m)
     origin = (0,1)
     graph= {}
-    createGraph(origin,m,graph)
-    print(graph)
+    createGraph(origin,'v',m,graph)
     p = shortestPath(graph,origin)
     print(p)
