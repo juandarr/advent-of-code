@@ -1,24 +1,21 @@
 def parseInformation(filename):
     file = open(filename, "r")
-    calories = file.readlines()
-    return list(map(lambda c: c.strip(), calories))
+    calories = file.read()
+    calories = calories.rstrip().split('\n\n')
+    return list(map(lambda c: map(int,tuple(c.split('\n'))), calories))
 
 def maxCalories(calories):
     biggest = 0
-    current = 0
-    for calorie in calories:
-        if calorie == '':
+    for group in calories:
+        current = 0
+        for calorie in group:
+            current += calorie
             if (biggest < current):
                 biggest = current
-            current = 0
-        else:
-            current += int(calorie)
-    if (biggest < current):
-        biggest = current
     return biggest
 
 if __name__=='__main__': 
-    test = False
+    test = True
     if test:
         filename = "day1-test-input.txt"
     else:
