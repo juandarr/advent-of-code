@@ -6,22 +6,24 @@ def parseInformation(filename):
 
 def checkGames(games):
     # Score added according the choice
-    scoreChoice = {'X':1,'Y':2,'Z':3, 'A':1, 'B':2, 'C':3}
+    scoreChoice = {'A':1, 'B':2, 'C':3}
     # Encodes winning results: 0 means draw, 1 means player 1 wins, 2 player 2 wins. Second
     # Value of the tuple is the score added for such result
-    possibleResults = {'A X':(0,3),'A Y':(2,6),'A Z':(1,6),'B X':(1,6),'B Y':(0,3),'B Z':(2,6),'C X':(2,6),'C Y':(1,6),'C Z':(0,3)}
+    possibleResults = {'AA':(0,3),'AB':(2,6),'AC':(1,6),'BA':(1,6),'BB':(0,3),'BC':(2,6),'CA':(2,6),'CB':(1,6),'CC':(0,3)}
+    decryption = {'X':{'A':'C','B':'A','C':'B'},'Y':{'A':'A','B':'B','C':'C'},'Z':{'A':'B','B':'C','C':'A'}}
 
     playerScore = [0,0] 
-    print(games)
     for game in games:
+        singleHand = game.split(' ')
+        singleHand[1]=decryption[singleHand[1]][singleHand[0]]
+        hands = ''.join(singleHand)
         # If draw add value to both players
-        if possibleResults[game][0]==0:
+        if possibleResults[hands][0]==0:
             for idx in range(len(playerScore)):
-                playerScore[idx] += possibleResults[game][1]
+                playerScore[idx] += possibleResults[hands][1]
         # Else add value to the winner
         else:
-            playerScore[possibleResults[game][0]-1] += possibleResults[game][1]
-        singleHand= game.split(' ')
+            playerScore[possibleResults[hands][0]-1] += possibleResults[hands][1]
         # Add value according to the player's choice 
         for idx in range(len(playerScore)):
             playerScore[idx] += scoreChoice[singleHand[idx]]
