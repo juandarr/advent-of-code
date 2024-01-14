@@ -1,4 +1,5 @@
 import os
+import sys
 
 def parseInformation(filename):
     file = open(filename, "r")
@@ -17,7 +18,15 @@ def maxCalories(calories):
     return biggest
 
 if __name__=='__main__': 
-    test = True
+
+    args = sys.argv[1:]
+    if args[0]=='test':
+        test = True
+    elif args[0]=='main':
+        test = False
+    else:
+        raise Exception('Wrong argument, expected "test" or "main"')
+
     dirname = os.path.dirname(__file__)
     if test:
         filename = os.path.join(dirname, 'day1-test-input.txt')
