@@ -1,3 +1,5 @@
+import os
+
 def parseInformation(filename):
     file = open(filename, "r")
     calories = file.read()
@@ -21,10 +23,11 @@ def max3Calories(calories):
 
 if __name__=='__main__': 
     test = False
+    dirname = os.path.dirname(__file__)
     if test:
-        filename = "day1-test-input.txt"
+        filename = os.path.join(dirname, 'day1-test-input.txt')
     else:
-        filename = "day1-input.txt"
+        filename = os.path.join(dirname, 'day1-input.txt')
     calories = parseInformation(filename)
     biggest3 = max3Calories(calories)
     print("Top 3 calorie amounts are {0}".format(biggest3))

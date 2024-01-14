@@ -1,3 +1,5 @@
+import os
+
 def parseInformation(filename):
     file = open(filename, "r")
     calories = file.read()
@@ -16,10 +18,11 @@ def maxCalories(calories):
 
 if __name__=='__main__': 
     test = True
+    dirname = os.path.dirname(__file__)
     if test:
-        filename = "day1-test-input.txt"
+        filename = os.path.join(dirname, 'day1-test-input.txt')
     else:
-        filename = "day1-input.txt"
+        filename = os.path.join(dirname, 'day1-input.txt')
     calories = parseInformation(filename)
     biggest = maxCalories(calories)
     print("Biggest calorie amount is: {0}".format(biggest))
