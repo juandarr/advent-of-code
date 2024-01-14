@@ -3,7 +3,7 @@ from os.path import join
 def performTests(dir, day, answers, fn, args): 
     passed= 0
     for idx,ans in enumerate(answers):
-        filename = "day{0}-test{1}-input.txt".format(idx+1, day)
+        filename = "day{0}-test{1}-input.txt".format(day,idx+1)
         filename = join(dir,filename)
         
         res = fn(filename,*args) 

@@ -1,3 +1,8 @@
+from os.path import dirname, abspath, join
+import sys
+sys.path.insert(0, dirname(dirname(abspath(__file__))))
+from tests import performTests
+
 def parseInformation(filename):
     file = open(filename, "r")
     games = file.read()
@@ -12,7 +17,6 @@ def checkGames(games):
     possibleResults = {'A X':(0,3),'A Y':(2,6),'A Z':(1,6),'B X':(1,6),'B Y':(0,3),'B Z':(2,6),'C X':(2,6),'C Y':(1,6),'C Z':(0,3)}
 
     playerScore = [0,0] 
-    print(games)
     for game in games:
         # If draw add value to both players
         if possibleResults[game][0]==0:
@@ -27,12 +31,26 @@ def checkGames(games):
             playerScore[idx] += scoreChoice[singleHand[idx]]
     return playerScore
 
-if __name__=='__main__': 
-    test = False
-    if test:
-        filename = "day2-test-input.txt"
-    else:
-        filename = "day2-input.txt"
+def main(filename):
     games = parseInformation(filename)
     playerScore = checkGames(games)
     print("Score of player 1 {0}, Score of player 2 {1}".format(playerScore[0], playerScore[1]))
+    return playerScore[1]
+
+if __name__=='__main__': 
+
+    args = sys.argv[1:]
+    if args[0]=='test':
+        test = True
+    elif args[0]=='main':
+        test = False
+    else:
+        raise Exception('Wrong argument, expected "test" or "main"')
+
+    dir = dirname(__file__)
+    if test:
+        performTests(dir,2,[15],main,[])
+    else:
+        filename = join(dir,'day2-input.txt')
+        playerScore = main(filename)
+        print("Score of player 2 {0}".format(playerScore))
