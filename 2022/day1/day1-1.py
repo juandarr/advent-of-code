@@ -34,10 +34,10 @@ if __name__=='__main__':
     else:
         raise Exception('Wrong argument, expected "test" or "main"')
 
-    dir = dirname(__file__)
     if test:
-        performTests(dir,1,[24000],main,[])
+        performTests(1,[24000],main,[])
     else:
+        dir = dirname(__file__)
         filename = join(dir,'day1-input.txt')
         biggest = main(filename)        
         print("Biggest calorie amount is: {0}".format(biggest))

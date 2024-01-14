@@ -34,7 +34,6 @@ def checkGames(games):
 def main(filename):
     games = parseInformation(filename)
     playerScore = checkGames(games)
-    print("Score of player 1 {0}, Score of player 2 {1}".format(playerScore[0], playerScore[1]))
     return playerScore[1]
 
 if __name__=='__main__': 
@@ -47,10 +46,10 @@ if __name__=='__main__':
     else:
         raise Exception('Wrong argument, expected "test" or "main"')
 
-    dir = dirname(__file__)
     if test:
-        performTests(dir,2,[15],main,[])
+        performTests(2,[15],main,[])
     else:
+        dir = dirname(__file__)
         filename = join(dir,'day2-input.txt')
         playerScore = main(filename)
         print("Score of player 2 {0}".format(playerScore))

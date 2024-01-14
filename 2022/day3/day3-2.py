@@ -1,3 +1,8 @@
+from os.path import dirname, abspath, join
+import sys
+sys.path.insert(0, dirname(dirname(abspath(__file__))))
+from tests import performTests
+
 def parseInformation(filename):
     file = open(filename, "r")
     tmp= file.read()
@@ -15,7 +20,7 @@ def getPriorities():
         p += 1
     return priorities
 
-def checkGroups(rucksacks):
+def checkGroups(rucksacks, priorities):
     netPriorities = 0
     items = []
     for rucksack in rucksacks:
@@ -28,16 +33,26 @@ def checkGroups(rucksacks):
             items = []
     return netPriorities
 
-if __name__=='__main__': 
-    test = False
-    if test:
-        filename = "day3-test-input.txt"
-    else:
-        filename = "day3-input.txt"
+def main(filename):
     # Create the priorities hash map: first a-z, then A-Z
     priorities = getPriorities()
     rucksacks = parseInformation(filename)
-    priorities = checkGroups(rucksacks)
-    print("Addition of priorities is {0}".format(priorities))
+    netPriorities = checkGroups(rucksacks, priorities)
+    return netPriorities 
 
+if __name__=='__main__': 
+    args = sys.argv[1:]
+    if args[0]=='test':
+        test = True
+    elif args[0]=='main':
+        test = False
+    else:
+        raise Exception('Wrong argument, expected "test" or "main"')
 
+    if test:
+        performTests(3,[70],main,[])
+    else:
+        dir = dirname(__file__)
+        filename = join(dir,'day3-input.txt')
+        netPriorities = main(filename)        
+        print("Addition of priorities is {0}".format(netPriorities))
