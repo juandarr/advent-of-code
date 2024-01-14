@@ -1,4 +1,3 @@
-from deepdiff import DeepDiff
 from os.path import dirname, abspath, join
 import sys
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
