@@ -1,4 +1,4 @@
-from os.path import dirname, abspath, join
+from os.path import dirname, abspath
 import sys
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 from utils import performTests, getAnswer
@@ -63,5 +63,3 @@ if __name__=='__main__':
     else:
         ans = getAnswer(5, main)       
         print("Here are the top crates in the every stack {0}".format(ans))
-
-

@@ -1,4 +1,4 @@
-from os.path import dirname, abspath, join
+from os.path import dirname, abspath
 import sys
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 from utils import performTests, getAnswer
