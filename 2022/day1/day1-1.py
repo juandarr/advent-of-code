@@ -1,5 +1,7 @@
-import os
+from os.path import dirname, abspath, join
 import sys
+sys.path.insert(0, dirname(dirname(abspath(__file__))))
+from tests import performTests
 
 def parseInformation(filename):
     file = open(filename, "r")
@@ -17,6 +19,11 @@ def maxCalories(calories):
                 biggest = current
     return biggest
 
+def main(filename):
+    calories = parseInformation(filename)
+    biggest = maxCalories(calories)
+    return biggest
+
 if __name__=='__main__': 
 
     args = sys.argv[1:]
@@ -27,11 +34,10 @@ if __name__=='__main__':
     else:
         raise Exception('Wrong argument, expected "test" or "main"')
 
-    dirname = os.path.dirname(__file__)
+    dir = dirname(__file__)
     if test:
-        filename = os.path.join(dirname, 'day1-test-input.txt')
+        performTests(dir,1,[24000],main,[])
     else:
-        filename = os.path.join(dirname, 'day1-input.txt')
-    calories = parseInformation(filename)
-    biggest = maxCalories(calories)
-    print("Biggest calorie amount is: {0}".format(biggest))
+        filename = join(dir,'day1-input.txt')
+        biggest = main(filename)        
+        print("Biggest calorie amount is: {0}".format(biggest))
