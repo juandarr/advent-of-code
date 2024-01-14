@@ -1,7 +1,7 @@
 from os.path import dirname, abspath, join
 import sys
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
-from tests import performTests
+from utils import performTests, getAnswer
 
 def parseInformation(filename):
     file = open(filename, "r")
@@ -50,9 +50,7 @@ if __name__=='__main__':
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(3,[157],main,[])
+        performTests(3,[157],main)
     else:
-        dir = dirname(__file__)
-        filename = join(dir,'day3-input.txt')
-        netPriorities = main(filename)        
+        netPriorities =  getAnswer(3,main)       
         print("Addition of priorities is {0}".format(netPriorities))

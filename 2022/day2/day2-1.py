@@ -1,7 +1,7 @@
 from os.path import dirname, abspath, join
 import sys
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
-from tests import performTests
+from utils import performTests, getAnswer
 
 def parseInformation(filename):
     file = open(filename, "r")
@@ -47,9 +47,7 @@ if __name__=='__main__':
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(2,[15],main,[])
+        performTests(2,[15],main)
     else:
-        dir = dirname(__file__)
-        filename = join(dir,'day2-input.txt')
-        playerScore = main(filename)
+        playerScore = getAnswer(2, main)
         print("Score of player 2 {0}".format(playerScore))

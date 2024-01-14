@@ -1,11 +1,16 @@
+from os.path import dirname, abspath
+import sys
+sys.path.insert(0, dirname(dirname(abspath(__file__))))
+from utils import performTests, getAnswer
+
 def parseInformation(filename):
     file = open(filename, "r")
     tmp= file.read()
     tmp= tmp.rstrip().split('\n')
     return list(tmp[0])
 
-def checkMarkerLocation(nCharacters,stream):
-    distinctCharacters = nCharacters 
+def checkMarkerLocation(stream, uniqueStream):
+    distinctCharacters = uniqueStream 
     idx = 0
     currentStarter = {}
     # Store fist nCharacters in hash map
@@ -33,26 +38,23 @@ def checkMarkerLocation(nCharacters,stream):
         idx +=1
     return idx
 
-def getLocation(filename, positions):
+def main(filename):
     s = parseInformation(filename)
-    location = checkMarkerLocation(positions,s)
+    uniqueStream = 4
+    location = checkMarkerLocation(s, uniqueStream)
     return location
 
 if __name__=='__main__': 
-    test = False
-    positions = 4
-    if test:
-        answers = [7,5,6,10,11]
-        passed= 0
-        for idx,ans in enumerate(answers):
-            filename = "day6-test{0}-input.txt".format(idx+1)
-            res = getLocation(filename,positions) 
-            if res==ans:
-                passed += 1
-            else:
-                print('Wrong: Answer to test {0} Should be {1}, got {2} instead'.format(idx+1,ans,res))
-        print('{0} of {1} tests PASSED'.format(passed, len(answers)))
+    args = sys.argv[1:]
+    if args[0]=='test':
+        test = True
+    elif args[0]=='main':
+        test = False
     else:
-        filename = "day6-input.txt"
-        ans = getLocation(filename, positions)
-        print("The character location at which the first {0}-character long starter marker is detected is {1}".format(positions,ans))
+        raise Exception('Wrong argument, expected "test" or "main"')
+
+    if test:
+        performTests(6,[7,5,6,10,11],main)
+    else:
+        ans = getAnswer(6,main)       
+        print("The character location at which the first 4-character long starter marker is detected is {0}".format(ans))

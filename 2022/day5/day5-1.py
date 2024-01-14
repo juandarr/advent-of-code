@@ -1,3 +1,8 @@
+from os.path import dirname, abspath, join
+import sys
+sys.path.insert(0, dirname(dirname(abspath(__file__))))
+from utils import performTests, getAnswer
+
 def parseInformation(filename):
     file = open(filename, "r")
     tmp= file.read()
@@ -39,14 +44,24 @@ def performActions(stacks, actions):
         ans += stacks[idx][-1]    
     return ans
 
-if __name__=='__main__': 
-    test = False
-    if test:
-        filename = "day5-test-input.txt"
-    else:
-        filename = "day5-input.txt"
-    stacks, actions = parseInformation(filename)
+def main(filename):
+    stacks,actions = parseInformation(filename)
     ans = performActions(stacks,actions)
-    print("Here are the top crates in the every stack {0}".format(ans))
+    return ans
+
+if __name__=='__main__': 
+    args = sys.argv[1:]
+    if args[0]=='test':
+        test = True
+    elif args[0]=='main':
+        test = False
+    else:
+        raise Exception('Wrong argument, expected "test" or "main"')
+
+    if test:
+        performTests(5,['CMZ'],main)
+    else:
+        ans = getAnswer(5, main)       
+        print("Here are the top crates in the every stack {0}".format(ans))
 
 
