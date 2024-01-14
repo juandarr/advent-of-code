@@ -1,0 +1,72 @@
+from deepdiff import DeepDiff
+from os.path import dirname, abspath, join
+import sys
+sys.path.insert(0, dirname(dirname(abspath(__file__))))
+from utils import performTests, getAnswer
+
+def parseInformation(filename):
+    file = open(filename, "r")
+    tmp= file.read()
+    tmp= tmp.rstrip().split('\n')
+    return tmp
+
+def folderTree(commandStream):
+    currentDirectory = ''
+    parent = ''
+    tree = {}
+    idx = 0 
+    for command in commandStream:
+        command = command.split(' ')
+        if command[0]=='$':
+            if command[1]=='cd':
+                if command[2]=='..':
+                    currentDirectory = parent
+                    parent = tree[currentDirectory]['parent'] 
+                else:
+                    parent = currentDirectory
+                    currentDirectory = (command[2],idx)
+                    idx +=1
+                    tree[currentDirectory]= {'parent':parent, 'size':0, 'children':[]}
+                    if parent!='':
+                        tree[parent]['children'].append(currentDirectory)
+        else:
+            if command[0]=='dir':
+                continue
+            else:
+                tree[currentDirectory]['children'].append((command[1],int(command[0])))
+                tree[currentDirectory]['size'] += int(command[0])
+                tmp = tree[currentDirectory]['parent']
+                while (tmp != ''):
+                    tree[tmp]['size']+= int(command[0])
+                    tmp = tree[tmp]['parent']
+    return tree
+
+def folderSizeSum(tree, upperLimit):
+    totalSize = 0
+    limit = upperLimit
+    for k in tree:
+        if tree[k]['size']<=limit:
+            totalSize += tree[k]['size']
+    return totalSize
+
+def main(filename):
+    commands= parseInformation(filename)
+    tree = folderTree(commands)
+    limit = 10**5
+    totalSize = folderSizeSum(tree, limit)
+    return totalSize
+
+if __name__ == '__main__':
+    args = sys.argv[1:]
+    if args[0]=='test':
+        test = True
+    elif args[0]=='main':
+        test = False
+    else:
+        raise Exception('Wrong argument, expected "test" or "main"')
+
+    if test:
+        performTests(7,[95437],main)
+    else:
+        ans = getAnswer(7,main)       
+        print("The sum of the total sizes of directories below 10000 is {0}".format(ans)) 

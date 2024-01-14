@@ -13,4 +13,4 @@ if __name__=='__main__':
             day = int(tmp[0])    
             challenge = int(tmp[1])
             proc = Popen([sys.executable, "day{0}/day{0}-{1}.py".format(day, challenge), args[1]])
-            return_value = proc.wait()  # this call blocks until the program has been finishedimport sys
+            return_value = proc.wait()  # this call blocks until the program has been finished
