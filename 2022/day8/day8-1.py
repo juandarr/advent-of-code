@@ -78,3 +78,4 @@ if __name__ == "__main__":
     else:
         ans = getAnswer(8, main)
         print("The number of visible trees is {0}".format(ans))
+# git commit -m "removed: file from solutions of day7 added by mistake in folder of day8;
