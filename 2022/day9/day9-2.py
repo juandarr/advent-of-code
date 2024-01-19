@@ -2,7 +2,7 @@ from os.path import dirname, abspath
 import sys
 
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
-from utils import performTests, getAnswer
+from utils import performTests, getAnswer  # noqa E402
 
 
 def parseInformation(filename):
@@ -17,13 +17,13 @@ def parseInformation(filename):
 
 def traverseBridge(actions, knots):
     positions = []
-    for i in range(knots):
+    for _ in range(knots):
         positions.append([0, 0])
     visited = {(positions[knots - 1][0], positions[knots - 1][1]): 1}
     visitCounter = 1
     movements = {"U": (0, 1), "D": (0, -1), "L": (-1, 0), "R": (1, 0)}
     for action in actions:
-        for i in range(int(action[1])):
+        for _ in range(int(action[1])):
             positions[0][0] += movements[action[0]][0]
             positions[0][1] += movements[action[0]][1]
             for k in range(1, knots):
@@ -62,7 +62,6 @@ if __name__ == "__main__":
         test = False
     else:
         raise Exception('Wrong argument, expected "test" or "main"')
-
     if test:
         performTests(9, [1, 36], main)
     else:

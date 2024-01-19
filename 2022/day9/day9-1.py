@@ -2,7 +2,7 @@ from os.path import dirname, abspath
 import sys
 
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
-from utils import performTests, getAnswer
+from utils import performTests, getAnswer  # noqa E402
 
 
 def parseInformation(filename):
@@ -20,11 +20,11 @@ def traverseBridge(actions):
     yT = 0
     xH = 0
     yH = 0
-    visited = {(xT, yT): 1}
+    visited: dict = {(xT, yT): 1}
     visitCounter = 1
     movements = {"U": (1, 0), "D": (-1, 0), "L": (0, -1), "R": (0, 1)}
     for action in actions:
-        for i in range(int(action[1])):
+        for _ in range(int(action[1])):
             xH += movements[action[0]][0]
             yH += movements[action[0]][1]
             if xH == xT:
@@ -41,8 +41,9 @@ def traverseBridge(actions):
                 if abs(xH - xT) > 1:
                     yT += yH - yT
                     xT += int((xH - xT) / abs(xH - xT))
-            if (xT, yT) not in visited:
-                visited[(xT, yT)] = 1
+            key = (xT, yT)
+            if key not in visited:
+                visited[key] = 1
                 visitCounter += 1
     return visitCounter
 
