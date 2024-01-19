@@ -20,7 +20,7 @@ def performTests(day, answers, fn):
                     idx + 1, ans, res
                 )
             )
-        print("    Running time: {0:7.4f} secs".format(t))
+        print("    Running time: {0:7.6f} secs".format(t))
     print("Results: {0} of {1} tests PASSED".format(passed, len(answers)))
 
 
@@ -31,5 +31,5 @@ def getAnswer(day, fn):
     t0 = time()
     res = fn(filename)
     t = time() - t0
-    print("    Running time: {0:7.4f} secs".format(t))
+    print("    Running time: {0:7.6f} secs".format(t))
     return res
