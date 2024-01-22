@@ -2,14 +2,14 @@ from os.path import join, dirname
 from time import time
 
 
-def performTests(day, answers, fn):
+def performTests(day, answers, fn, *args):
     dir = dirname(__file__)
     passed = 0
     for idx, ans in enumerate(answers):
         filename = "day{0}-test{1}-input.txt".format(day, idx + 1)
         filename = join(dir, "day{0}".format(day), filename)
         t0 = time()
-        res = fn(filename)
+        res = fn(filename, *args)
         t = time() - t0
         if res == ans:
             passed += 1
@@ -24,12 +24,12 @@ def performTests(day, answers, fn):
     print("Results: {0} of {1} tests PASSED".format(passed, len(answers)))
 
 
-def getAnswer(day, fn):
+def getAnswer(day, fn, *args):
     dir = dirname(__file__)
     filename = "day{0}-input.txt".format(day)
     filename = join(dir, "day{0}".format(day), filename)
     t0 = time()
-    res = fn(filename)
+    res = fn(filename, *args)
     t = time() - t0
     print("    Running time: {0:7.6f} secs".format(t))
     return res
