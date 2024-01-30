@@ -13,12 +13,12 @@ def parseInformation(filename):
     tmp = file.read()
     tmp = tmp.rstrip().split("\n")
     bps = []
-    robots = ["oreRobot", "clayRobot", "obsidianRobot", "geodeRobot"]
-    resourcesKeys = {
-        "oreRobot": ["ore"],
-        "clayRobot": ["ore"],
-        "obsidianRobot": ["ore", "clay"],
-        "geodeRobot": ["ore", "obsidian"],
+    robots = ["orerobot", "clayrobot", "obsidianrobot", "geoderobot"]
+    resourceskeys = {
+        "orerobot": ["ore"],
+        "clayrobot": ["ore"],
+        "obsidianrobot": ["ore", "clay"],
+        "geoderobot": ["ore", "obsidian"],
     }
     for line in tmp:
         blueprint = re.findall("[0-9]+", line)
@@ -26,15 +26,15 @@ def parseInformation(filename):
         idx = 1
         for robot in robots:
             bp[robot] = {}
-            for resource in resourcesKeys[robot]:
+            for resource in resourceskeys[robot]:
                 bp[robot][resource] = int(blueprint[idx])
                 idx += 1
 
-        maxSpend = {"ore": 0, "clay": 0, "obsidian": 0}
+        maxspend = {"ore": 0, "clay": 0, "obsidian": 0}
         for robot in robots:
             for resource in bp[robot]:
-                maxSpend[resource] = max(maxSpend[resource], bp[robot][resource])
-        bp["maxSpend"] = maxSpend
+                maxspend[resource] = max(maxspend[resource], bp[robot][resource])
+        bp["maxspend"] = maxspend
         bps.append(bp)
     return bps
 

@@ -26,7 +26,7 @@ def parseInformation(filename):
         bp = {"id": int(blueprint[0])}
         idx = 1
         for robot in robots:
-            bp[robot] = {}
+            bp[robot] {}
             for resource in resourcesKeys[robot]:
                 bp[robot][resource] = int(blueprint[idx])
                 idx += 1
