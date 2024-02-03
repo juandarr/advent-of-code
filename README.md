@@ -15,5 +15,26 @@ You run mojo programs using `mojo filename.mojo`
 Programs can be build using `mojo build filaname.mojo`.
 
 ## AOC 2022
-I solved this challenge the past year. I will be storing the main files, algorithms and data structures use for the solutions and documenting my line of thinking while solving each challenge.
+I solved every challenge for the year 2022. The code has been categorized in three basic parts: 
+- parseInformation function 
+- the algorithm
+- main function putting eveything together.
 
+
+### Run
+Every solution can be called using the helper function designed to call any given challege (one or two) for a given day. Here is how it works:
+
+```python
+python aoc2022.py day.challenge_number type
+```
+
+Where:
+-   `day`:  the respective day of the challenge
+-   `challenge_number`: the challenge number for the day, can be `1` or `2`
+-   `type`: there are two types of calls, `test` to call the test and `main` to execute the main challenge problem
+
+For example:
+```python
+python aoc2022.py 1.1 test
+```
+This instruction will execute the `test` problem of day `1`, challenge `1`.
