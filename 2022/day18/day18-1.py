@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -51,7 +51,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(18, [64], main)
+        performTests(2022, 18, [64], main)
     else:
-        ans = getAnswer(18, main)
+        ans = getAnswer(2022, 18, main)
         print("The total surface area is {0}".format(ans))

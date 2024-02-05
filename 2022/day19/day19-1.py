@@ -4,7 +4,7 @@ from math import ceil
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -13,12 +13,12 @@ def parseInformation(filename):
     tmp = file.read()
     tmp = tmp.rstrip().split("\n")
     bps = []
-    robots = ["orerobot", "clayrobot", "obsidianrobot", "geoderobot"]
+    robots = ["oreRobot", "clayRobot", "obsidianRobot", "geodeRobot"]
     resourceskeys = {
-        "orerobot": ["ore"],
-        "clayrobot": ["ore"],
-        "obsidianrobot": ["ore", "clay"],
-        "geoderobot": ["ore", "obsidian"],
+        "oreRobot": ["ore"],
+        "clayRobot": ["ore"],
+        "obsidianRobot": ["ore", "clay"],
+        "geodeRobot": ["ore", "obsidian"],
     }
     for line in tmp:
         blueprint = re.findall("[0-9]+", line)
@@ -34,7 +34,7 @@ def parseInformation(filename):
         for robot in robots:
             for resource in bp[robot]:
                 maxspend[resource] = max(maxspend[resource], bp[robot][resource])
-        bp["maxspend"] = maxspend
+        bp["maxSpend"] = maxspend
         bps.append(bp)
     return bps
 
@@ -182,7 +182,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(19, [33], main)
+        performTests(2022, 19, [33], main)
     else:
-        ans = getAnswer(19, main)
+        ans = getAnswer(2022, 19, main)
         print("The total quality level of all the blueprints is {0}".format(ans))

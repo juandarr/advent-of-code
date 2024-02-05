@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -64,7 +64,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(5, ["CMZ"], main)
+        performTests(2022, 5, ["CMZ"], main)
     else:
-        ans = getAnswer(5, main)
+        ans = getAnswer(2022, 5, main)
         print("Here are the top crates in the every stack {0}".format(ans))

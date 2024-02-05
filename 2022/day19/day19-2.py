@@ -5,7 +5,7 @@ from math import ceil
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -26,7 +26,7 @@ def parseInformation(filename):
         bp = {"id": int(blueprint[0])}
         idx = 1
         for robot in robots:
-            bp[robot] {}
+            bp[robot] = {}
             for resource in resourcesKeys[robot]:
                 bp[robot][resource] = int(blueprint[idx])
                 idx += 1
@@ -214,9 +214,9 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(19, [56 * 62], main)
+        performTests(2022, 19, [56 * 62], main)
     else:
-        ans = getAnswer(19, main)
+        ans = getAnswer(2022, 19, main)
         print(
             "The total product of all the blueprints largest geode numbers is {0}".format(
                 ans

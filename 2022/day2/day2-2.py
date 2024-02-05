@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -68,7 +68,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(2, [12], main)
+        performTests(2022, 2, [12], main)
     else:
-        playerScore = getAnswer(2, main)
+        playerScore = getAnswer(2022, 2, main)
         print("Score of player 2 {0}".format(playerScore))

@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -56,7 +56,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(3, [157], main)
+        performTests(2022, 3, [157], main)
     else:
-        netPriorities = getAnswer(3, main)
+        netPriorities = getAnswer(2022, 3, main)
         print("Addition of priorities is {0}".format(netPriorities))

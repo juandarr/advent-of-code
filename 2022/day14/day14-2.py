@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -134,7 +134,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(14, [93], main)
+        performTests(2022, 14, [93], main)
     else:
-        ans = getAnswer(14, main)
+        ans = getAnswer(2022, 14, main)
         print("Number of sand units coming to rest is {0}".format(ans))

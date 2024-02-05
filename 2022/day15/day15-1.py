@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -77,10 +77,10 @@ if __name__ == "__main__":
 
     if test:
         row = 10
-        performTests(15, [26], main, row)
+        performTests(2022, 15, [26], main, row)
     else:
         row = 2 * 10**6
-        ans = getAnswer(15, main, row)
+        ans = getAnswer(2022, 15, main, row)
         print(
             "The number of positions without beacons in row {0} is {1}".format(row, ans)
         )

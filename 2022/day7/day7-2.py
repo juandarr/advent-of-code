@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -75,9 +75,9 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(7, [24933642], main)
+        performTests(2022, 7, [24933642], main)
     else:
-        ans = getAnswer(7, main)
+        ans = getAnswer(2022, 7, main)
         print(
             "A folder can be deleted  to get {0} of space, required to achieve at least 30M of free memory".format(
                 ans

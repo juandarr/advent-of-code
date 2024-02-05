@@ -2,7 +2,7 @@ from os.path import dirname, abspath
 import sys
 from deepdiff import DeepDiff
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -139,9 +139,9 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(7, [95437], main)
+        performTests(2022, 7, [95437], main)
     else:
-        ans = getAnswer(7, main)
+        ans = getAnswer(2022, 7, main)
         print(
             "The sum of the total sizes of directories below 10000 is {0}".format(ans)
         )

@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -50,7 +50,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(10, [13140], main)
+        performTests(2022, 10, [13140], main)
     else:
-        ans = getAnswer(10, main)
+        ans = getAnswer(2022, 10, main)
         print("The signal strenght is {0}".format(ans))

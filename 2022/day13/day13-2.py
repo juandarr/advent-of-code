@@ -3,7 +3,7 @@ from functools import cmp_to_key
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -74,7 +74,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(13, [140], main)
+        performTests(2022, 13, [140], main)
     else:
-        ans = getAnswer(13, main)
+        ans = getAnswer(2022, 13, main)
         print("The decoder key is {0}".format(ans))

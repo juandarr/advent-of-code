@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -59,9 +59,9 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(6, [7, 5, 6, 10, 11], main)
+        performTests(2022, 6, [7, 5, 6, 10, 11], main)
     else:
-        ans = getAnswer(6, main)
+        ans = getAnswer(2022, 6, main)
         print(
             "The character location at which the first 4-character long starter marker is detected is {0}".format(
                 ans

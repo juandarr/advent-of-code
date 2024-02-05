@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -134,7 +134,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(17, [3068], main)
+        performTests(2022, 17, [3068], main)
     else:
-        ans = getAnswer(17, main)
+        ans = getAnswer(2022, 17, main)
         print("The height of the tower of rocks is {0}".format(ans))

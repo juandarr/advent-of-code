@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -83,10 +83,10 @@ if __name__ == "__main__":
 
     if test:
         rowLimit = 20
-        performTests(15, [56000011], main, rowLimit)
+        performTests(2022, 15, [56000011], main, rowLimit)
     else:
         rowLimit = 4 * 10**6
-        tf = getAnswer(15, main, rowLimit)
+        tf = getAnswer(2022, 15, main, rowLimit)
         print(
             "The tuning frequency for the only possible position for the distress beacon is {0}".format(
                 tf

@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -74,7 +74,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(20, [1623178306], main)
+        performTests(2022, 20, [1623178306], main)
     else:
-        ans = getAnswer(20, main)
+        ans = getAnswer(2022, 20, main)
         print("The total sum of values at the 1000's is {0}".format(ans))

@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -117,9 +117,9 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(14, [24], main)
+        performTests(2022, 14, [24], main)
     else:
-        ans = getAnswer(14, main)
+        ans = getAnswer(2022, 14, main)
         print(
             "The number of units of sand comming to rest before overflow is {0}".format(
                 ans

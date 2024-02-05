@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -44,7 +44,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(4, [2], main)
+        performTests(2022, 4, [2], main)
     else:
-        overlaps = getAnswer(4, main)
+        overlaps = getAnswer(2022, 4, main)
         print("The number of overlaps in work assignments is {0}".format(overlaps))

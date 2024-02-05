@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -44,7 +44,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(1, [45000], main)
+        performTests(2022, 1, [45000], main)
     else:
-        biggest = getAnswer(1, main)
+        biggest = getAnswer(2022, 1, main)
         print("Total sum is {0}".format(biggest))

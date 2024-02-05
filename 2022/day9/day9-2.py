@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     else:
         raise Exception('Wrong argument, expected "test" or "main"')
     if test:
-        performTests(9, [1, 36], main)
+        performTests(2022, 9, [1, 36], main)
     else:
-        ans = getAnswer(9, main)
+        ans = getAnswer(2022, 9, main)
         print("The number of visited positions by tail is {0}".format(ans))

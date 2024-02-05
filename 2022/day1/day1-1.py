@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -39,7 +39,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(1, [24000], main)
+        performTests(2022, 1, [24000], main)
     else:
-        biggest = getAnswer(1, main)
+        biggest = getAnswer(2022, 1, main)
         print("Biggest calorie amount is: {0}".format(biggest))
