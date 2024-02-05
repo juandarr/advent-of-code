@@ -1,28 +1,55 @@
+from os.path import dirname, abspath
+import sys
+
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
+from utils import performTests, getAnswer  # noqa E402
+
+
 def read_file(filename):
     return open(filename, "r")
 
+
 def parseInformation(line, limit):
-    tmp = line.split(':')
-    game =  int(tmp[0].split(' ')[1])
-    sets = tmp[1].strip().split(';') 
+    tmp = line.split(":")
+    game = int(tmp[0].split(" ")[1])
+    sets = tmp[1].strip().split(";")
     valid = True
     for s in sets:
-        balls = s.strip().split(',')
+        balls = s.strip().split(",")
         for ball in balls:
-            tmp = ball.strip().split(' ')
-            if limit[tmp[1]]<int(tmp[0]):
+            tmp = ball.strip().split(" ")
+            if limit[tmp[1]] < int(tmp[0]):
                 valid = False
                 return (valid, game)
     return (valid, game)
 
 
-if __name__=='__main__': 
-    lines = read_file("day2-1-input.txt")
-    #linesTest = ['Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green','Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue','Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red','Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red','Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green']
-    limit = {'red': 12,'green': 13, 'blue':14}
+def IDsum(filename):
+    lines = read_file(filename)
+    limit = {"red": 12, "green": 13, "blue": 14}
     net = 0
     for line in lines:
         (validGroup, game) = parseInformation(line, limit)
-        if (validGroup):
+        if validGroup:
             net += game
-    print(net)
+    return net
+
+
+def main(filename):
+    net = IDsum(filename)
+    return net
+
+
+if __name__ == "__main__":
+    args = sys.argv[1:]
+    if args[0] == "test":
+        test = True
+    elif args[0] == "main":
+        test = False
+    else:
+        raise Exception('Wrong argument, expected "test" or "main"')
+    if test:
+        performTests(2023, 2, [8], main)
+    else:
+        biggest = getAnswer(2023, 2, main)
+        print("The sum of values is: {0}".format(biggest))

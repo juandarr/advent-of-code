@@ -71,11 +71,11 @@ def monkeyMath(values, formulas):
     while nodeHuman not in values:
         currentValue = tmpInt
         currentNode = tmpStr
+        i = 0
         for idx, operand in enumerate(formulas[currentNode]["operands"]):
             if isinstance(operand, int):
                 tmpInt = operand
             else:
-                pastStr = tmpStr
                 tmpStr = operand
                 i = idx
         if formulas[currentNode]["operator"] == "*":
@@ -92,7 +92,6 @@ def monkeyMath(values, formulas):
                 tmpInt = currentValue * tmpInt
             else:
                 tmpInt = tmpInt / currentValue
-        # del formulas[pastStr]
         values[tmpStr] = tmpInt
     return int(values[nodeHuman])
 
