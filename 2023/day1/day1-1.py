@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -18,11 +18,10 @@ def addValues(lines):
             try:
                 if int(s) in digits:
                     values.append(int(s))
-            except:
+            except ValueError:
                 continue
-        if len(values) > 0:
-            val = int("{0}{1}".format(values[0], values[-1]))
-            net += val
+        val = int("{0}{1}".format(values[0], values[-1]))
+        net += val
     return net
 
 
@@ -41,7 +40,7 @@ if __name__ == "__main__":
     else:
         raise Exception('Wrong argument, expected "test" or "main"')
     if test:
-        performTests(1, [142, 209], main)
+        performTests(2023, 1, [142], main, test=["1"])
     else:
-        biggest = getAnswer(1, main)
+        biggest = getAnswer(2023, 1, main)
         print("The sum of the calibration values is: {0}".format(biggest))

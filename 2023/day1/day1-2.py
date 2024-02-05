@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -64,7 +64,7 @@ if __name__ == "__main__":
     else:
         raise Exception('Wrong argument, expected "test" or "main"')
     if test:
-        performTests(1, [142, 281], main)
+        performTests(2023, 1, [281], main, test=["2"])
     else:
-        biggest = getAnswer(1, main)
+        biggest = getAnswer(2023, 1, main)
         print("The sum of the calibration values is: {0}".format(biggest))
