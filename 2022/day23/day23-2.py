@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -82,9 +82,9 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(23, [20], main)
+        performTests(2022, 23, [20], main)
     else:
-        ans = getAnswer(23, main)
+        ans = getAnswer(2022, 23, main)
         print(
             "The number of rounds before the elves are completely distributed is {0}".format(
                 ans

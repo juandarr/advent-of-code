@@ -2,7 +2,7 @@ import re
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -112,7 +112,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(22, [6032], main)
+        performTests(2022, 22, [6032], main)
     else:
-        ans = getAnswer(22, main)
+        ans = getAnswer(2022, 22, main)
         print("The final password is {0}".format(ans))

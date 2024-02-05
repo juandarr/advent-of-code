@@ -2,7 +2,7 @@ import re
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -302,13 +302,13 @@ def warp(map, test):
     warped = []
     size = 10**12
     for i in map["row"]:
-        tmp = map["row"][i][1] - map["row"][i][0] + 1
-        if size > tmp:
-            size = tmp
+        tmpSize = map["row"][i][1] - map["row"][i][0] + 1
+        if size > tmpSize:
+            size = tmpSize
     warped.append([0] * (4 * size + 2))
     for i in map["row"]:
         # print(map['row'][i])
-        tmp = [0]
+        tmp: list[int | tuple[int, int]] = [0]
         for idx in range(4 * size):
             if idx + 1 <= map["row"][i][1] and idx + 1 >= map["row"][i][0]:
                 tmp.append((int(i), idx + 1))
@@ -386,7 +386,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(22, [5031], main, True)
+        performTests(2022, 22, [5031], main, True)
     else:
-        ans = getAnswer(22, main, False)
+        ans = getAnswer(2022, 22, main, False)
         print("The final password is {0}".format(ans))

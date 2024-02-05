@@ -2,7 +2,7 @@ from heapq import heappop, heappush
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 # Generally useful data
@@ -114,7 +114,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(24, [18], main)
+        performTests(2022, 24, [18], main)
     else:
-        ans = getAnswer(24, main)
+        ans = getAnswer(2022, 24, main)
         print("The minimal time to reach the goal is {0}".format(ans))

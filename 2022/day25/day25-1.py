@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -67,7 +67,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(25, ["2=-1=0"], main)
+        performTests(2022, 25, ["2=-1=0"], main)
     else:
-        ans = getAnswer(25, main)
+        ans = getAnswer(2022, 25, main)
         print("The snafu number to be supplied to the machine is {0}".format(ans))

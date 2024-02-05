@@ -1,7 +1,7 @@
 from os.path import dirname, abspath
 import sys
 
-sys.path.insert(0, dirname(dirname(abspath(__file__))))
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
 
 
@@ -61,7 +61,10 @@ def moveInField(field, locations):
                 locationsToUpdate[newLocations[newLocation][0]] = newLocation
         locations = updateField(locations, locationsToUpdate)
         checker = [*checker[1:], checker[0]]
-    limits = {"i": [float("inf"), -float("inf")], "j": [float("inf"), -float("inf")]}
+    limits: dict[str, list[float | int]] = {
+        "i": [float("inf"), -float("inf")],
+        "j": [float("inf"), -float("inf")],
+    }
     for i, j in locations:
         if i < limits["i"][0]:
             limits["i"][0] = i
@@ -72,8 +75,8 @@ def moveInField(field, locations):
         if j > limits["j"][1]:
             limits["j"][1] = j
     emptyCounter = 0
-    for i in range(limits["i"][0], limits["i"][1] + 1):
-        for j in range(limits["j"][0], limits["j"][1] + 1):
+    for i in range(int(limits["i"][0]), int(limits["i"][1] + 1)):
+        for j in range(int(limits["j"][0]), int(limits["j"][1] + 1)):
             if (i, j) not in locations:
                 emptyCounter += 1
     return emptyCounter
@@ -95,7 +98,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(23, [110], main)
+        performTests(2022, 23, [110], main)
     else:
-        ans = getAnswer(23, main)
+        ans = getAnswer(2022, 23, main)
         print("The number of empty ground tiles is {0}".format(ans))
