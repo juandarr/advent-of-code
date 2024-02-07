@@ -1,37 +1,45 @@
-def read_file(filename):
-    return open(filename, "r")
+from os.path import dirname, abspath
+import sys
 
-def parseInformation(lines):
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
+from utils import performTests, getAnswer  # noqa E402
+
+
+def parseInformation(filename):
+    lines = open(filename, "r")
     c = 0
-    seeds = ''
+    seeds = ""
     mapping = {}
-    currentMapping = ''
+    currentMapping = ""
     for line in lines:
-        if c==0:
-            seeds = line.strip().split(':')[1].strip().split()
+        if c == 0:
+            seeds = line.strip().split(":")[1].strip().split()
             c += 1
         else:
             tmp = line.strip()
-            if tmp == '': continue
-            if tmp!= '' and tmp[-1]==':':
-                tmp = tmp.split(' ')
+            if tmp == "":
+                continue
+            if tmp != "" and tmp[-1] == ":":
+                tmp = tmp.split(" ")
                 currentMapping = tmp[0]
                 mapping[currentMapping] = []
             else:
-                tmp = tmp.split(' ') 
+                tmp = tmp.split(" ")
                 mapping[currentMapping].append(tmp)
     return seeds, mapping
 
-if __name__=='__main__': 
-    test =False 
-    if test:
-        filename = "day5-test-input.txt"
-    else:
-        filename = "day5-1-input.txt"
-    mappingLabels = ['seed-to-soil', 'soil-to-fertilizer', 'fertilizer-to-water', 'water-to-light', 'light-to-temperature', 'temperature-to-humidity', 'humidity-to-location']
-    lines = read_file(filename)
-    seeds, mapping= parseInformation(lines)
-    minLocation = float('inf')
+
+def locationNumber(seeds, mapping):
+    mappingLabels = [
+        "seed-to-soil",
+        "soil-to-fertilizer",
+        "fertilizer-to-water",
+        "water-to-light",
+        "light-to-temperature",
+        "temperature-to-humidity",
+        "humidity-to-location",
+    ]
+    minLocation = float("inf")
     for seed in seeds:
         currentNode = int(seed)
         for label in mappingLabels:
@@ -42,4 +50,25 @@ if __name__=='__main__':
                     break
         if minLocation > currentNode:
             minLocation = currentNode
-    print(minLocation)
+    return minLocation
+
+
+def main(filename):
+    seeds, mapping = parseInformation(filename)
+    minLocation = locationNumber(seeds, mapping)
+    return minLocation
+
+
+if __name__ == "__main__":
+    args = sys.argv[1:]
+    if args[0] == "test":
+        test = True
+    elif args[0] == "main":
+        test = False
+    else:
+        raise Exception('Wrong argument, expected "test" or "main"')
+    if test:
+        performTests(2023, 5, [35], main)
+    else:
+        ans = getAnswer(2023, 5, main)
+        print("The lowest location is: {0}".format(ans))
