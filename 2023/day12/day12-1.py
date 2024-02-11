@@ -1,20 +1,32 @@
-def read_file(filename):
-    file = open(filename,'r')
-    return file.readlines()
+from os.path import dirname, abspath
+import sys
 
-def parseInformation(lines):
-    m =[]
+sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
+from utils import performTests, getAnswer  # noqa E402
+
+
+def parseInformation(filename):
+    file = open(filename, "r")
+    lines = file.readlines()
+    m = []
     # Read lines and expand by rows
     for line in lines:
         tmp = line.strip().split()
-        m.append([list(tmp[0]),tmp[1].split(',') ])
+        m.append([list(tmp[0]), tmp[1].split(",")])
     return m
+
+
 mem = {}
+
+
 def findSequence(path, sequence):
+    key = ("".join(path), ",".join(sequence))
+    if key in mem:
+        return mem[key]
     if sequence == []:
-        valid =True
-        for s in ''.join(path):
-            if s not in ['.','?']:
+        valid = True
+        for s in "".join(path):
+            if s not in [".", "?"]:
                 valid = False
                 break
         if valid:
@@ -23,49 +35,69 @@ def findSequence(path, sequence):
             return 0
     seqVal = int(sequence[0])
     c = 0
-    l = 0
-    while c<len(path):
-        if path[c]=='#':
-            l += 1
-            if l>seqVal:
+    i = 0
+    while c < len(path):
+        if path[c] == "#":
+            i += 1
+            if i > seqVal:
                 break
-        elif path[c]=='.':
-            if l==seqVal:
-                return findSequence(path[c+1:],sequence[1:])
-            elif l>0 and l<seqVal:
+        elif path[c] == ".":
+            if i == seqVal:
+                s = findSequence(path[c + 1 :], sequence[1:])
+                mem[key] = s
+                return s
+            elif i > 0 and i < seqVal:
                 break
-        elif path[c]=='?':
-            if l==seqVal:
-                path[c]='.'
-                return findSequence(path[c+1:], sequence[1:])
-            elif l==0:
+        elif path[c] == "?":
+            if i == seqVal:
+                path[c] = "."
+                s = findSequence(path[c + 1 :], sequence[1:])
+                mem[key] = s
+                return s
+            elif i == 0:
                 net = 0
-                for s in ['.','#']:
+                for s in [".", "#"]:
                     path[c] = s
-                    if s=='.':
-                        net += findSequence(path[c+1:], sequence)
-                    elif s=='#':
-                        net += findSequence(path[c:],sequence)
+                    if s == ".":
+                        net += findSequence(path[c + 1 :], sequence)
+                    elif s == "#":
+                        net += findSequence(path[c:], sequence)
+                mem[key] = net
                 return net
-            elif l<seqVal:
-                path[c]='#'
-                l += 1
+            elif i < seqVal:
+                path[c] = "#"
+                i += 1
         c += 1
-    if l==seqVal and len(sequence)==1:
+    if i == seqVal and len(sequence) == 1:
         return 1
     return 0
 
-if __name__=='__main__': 
-    test =True
-    if test:
-        filename = "day12-test-input.txt"
-    else:
-        filename = "day12-1-input.txt"
-    lines = read_file(filename)
-    m= parseInformation(lines)
+
+def sumOfPossibleArrangements(m):
     net = 0
     for row in m:
         path = row[0]
         sequence = row[1]
         net += findSequence(path, sequence)
-    print(net)
+    return net
+
+
+def main(filename):
+    m = parseInformation(filename)
+    net = sumOfPossibleArrangements(m)
+    return net
+
+
+if __name__ == "__main__":
+    args = sys.argv[1:]
+    if args[0] == "test":
+        test = True
+    elif args[0] == "main":
+        test = False
+    else:
+        raise Exception('Wrong argument, expected "test" or "main"')
+    if test:
+        performTests(2023, 12, [21], main)
+    else:
+        ans = getAnswer(2023, 12, main)
+        print("The sum of possible arrangements is: {0}".format(ans))
