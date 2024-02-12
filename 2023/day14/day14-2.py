@@ -138,4 +138,4 @@ if __name__ == "__main__":
         performTests(2023, 14, [64], main)
     else:
         ans = getAnswer(2023, 14, main)
-        print("The sum of possible arrangements is: {0}".format(ans))
+        print("The total load is: {0}".format(ans))

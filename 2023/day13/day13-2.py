@@ -214,4 +214,4 @@ if __name__ == "__main__":
         performTests(2023, 13, [400], main)
     else:
         ans = getAnswer(2023, 13, main)
-        print("The sum of possible arrangements is: {0}".format(ans))
+        print("The summarization of notes is: {0}".format(ans))
