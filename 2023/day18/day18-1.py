@@ -1,6 +1,5 @@
 from os.path import dirname, abspath
 import sys
-import heapq
 
 sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
