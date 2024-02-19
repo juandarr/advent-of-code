@@ -112,4 +112,6 @@ if __name__ == "__main__":
         performTests(2023, 24, [47], main)
     else:
         ans = getAnswer(2023, 24, main)
-        print("The number of intersections within the test area is: {0}".format(ans))
+        print(
+            "The sum of x,y,z coordinates of the initial position is: {0}".format(ans)
+        )
