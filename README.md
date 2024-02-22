@@ -1,6 +1,7 @@
 # Advent of Code
 
 This repository collects all input files, solutions, template algorithms, data structures and other supporting information used to solve the [Advent of code](https://adventofcode.com) challenges in different years: 2022, 2023. A generic script was written to run tests and main problem for a given year, day and challenge. 
+
 ## Run script
 Every solution can be called using the helper function designed to call any given challege (one or two) for a given day and year. Here is how it works:
 
@@ -19,6 +20,9 @@ For example:
 python aoc.py 2022.1.1 test
 ```
 This instruction will execute the `test` problem of day `1`, challenge `1` of year `2022`.
+
+### tests
+One or more tests can be added and specified for each particular challenge at the main execution section of the challenge's file. For more information, explore the utils file, `performTests` function. 
 
 ## AOC 2023
 I solved every challenge for the year 2023. The code has been categorized in three basic parts: 
@@ -42,5 +46,3 @@ I solved every challenge for the year 2022. The code has been categorized in thr
 - parseInformation function 
 - the algorithm
 - main function putting eveything together.
-
-

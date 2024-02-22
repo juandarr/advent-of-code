@@ -3,6 +3,12 @@ from time import time
 
 
 def performTests(year, day, answers, fn, *args, test=None):
+    """
+    This function perform tests for every `dayx-testy-input.txt` file defined. When test is None it will run and try to match
+    every answer defined from the first possible test, `1`. If test is defined the tests as a list of tests (values as strings), the same number
+    of answers is expected in a list.
+    *args is used when more than the typical arguments are expected in the main function.
+    """
     dir = dirname(__file__)
     passed = 0
     for idx, ans in enumerate(answers):
