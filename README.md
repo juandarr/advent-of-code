@@ -25,7 +25,7 @@ This instruction will execute the `test` problem of day `1`, challenge `1` of ye
 One or more tests can be added and specified for each particular challenge at the main execution section of the challenge's file. For more information, explore the utils file, `performTests` function. 
 
 ## AOC 2023
-I solved every challenge for the year 2023. The code has been categorized in three basic parts: 
+Solved every challenge for the year 2023. The code has been categorized in three basic parts: 
 - parseInformation function 
 - the algorithm
 - main function putting eveything together.
@@ -46,3 +46,7 @@ I solved every challenge for the year 2022. The code has been categorized in thr
 - parseInformation function 
 - the algorithm
 - main function putting eveything together.
+
+### Go basics
+I started learning the programming language Go. It is a typed, compiled programming language developed by Google. It was design with conconcurrency in mind. It is widely used in web development as a backend language and has a special place in the world of cloud computing.Its performance is superior to interpreted languages such as Python, Ruby or Javascript. 
+First program of the AOC 2022 challenge was written in Go. More programs will be written in Go in the future. 
