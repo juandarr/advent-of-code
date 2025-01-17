@@ -15,7 +15,6 @@ def parseInformation(filename):
         tmp = row.split("   ")
         a.append(int(tmp[0]))
         b.append(int(tmp[1]))
-    print(a,b)
     return [a,b]
 
 
