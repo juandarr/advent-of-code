@@ -21,6 +21,10 @@ def parseInformation(filename):
 
 def sumDifference(l):
     total = 0
+    a = sorted(l[0])
+    b = sorted(l[1])
+    for i in range(len(a)):
+        total += abs(a[i]-b[i])
     return total
 
 
@@ -40,7 +44,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(2024, 1, [0], main)
+        performTests(2024, 1, [11], main)
     else:
         total = getAnswer(2024, 1, main)
         print("The addition of differences of the sorted lists is: {0}".format(total))
