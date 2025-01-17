@@ -24,6 +24,12 @@ This instruction will execute the `test` problem of day `1`, challenge `1` of ye
 ### tests
 One or more tests can be added and specified for each particular challenge at the main execution section of the challenge's file. For more information, explore the utils file, `performTests` function. 
 
+## AOC 2024
+This year's challenges will be solved in Python again. 
+
+### Initial goal
+Maybe along the way I will give Mojo or Zig a try. My goal is to solve the challenges of 2024, one day at a time. 
+
 ## AOC 2023
 Solved every challenge for the year 2023. The code has been categorized in three basic parts: 
 - parseInformation function 
