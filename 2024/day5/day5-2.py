@@ -31,8 +31,17 @@ def checkUpdates(rules, updates, updatesDict):
                 if update[rule[0]]>update[rule[1]]:
                     valid = False
                     break
-        if valid:
-            validTotal += updates[idx][len(updates[idx])//2]
+        if not(valid):
+            for i in range(10):
+                for rule in rules:
+                    if rule[0] in update and rule[1] in update:
+                        if update[rule[0]]>update[rule[1]]:
+                            tmp = update[rule[0]]
+                            update[rule[0]]= update[rule[1]]
+                            update[rule[1]]=tmp
+            tmpSorted = sorted(update.items(), key=lambda item: item[1])
+            print(tmpSorted)
+            validTotal += tmpSorted[len(tmpSorted)//2][0]
     return validTotal
 
 
@@ -52,7 +61,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(2024, 5, [143], main)
+        performTests(2024, 5, [123], main)
     else:
         total = getAnswer(2024, 5, main)
         print("The sum of middle values of correctly-ordered updates is: {0}".format(total))
