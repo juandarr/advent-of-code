@@ -1,5 +1,6 @@
 from os.path import dirname, abspath
 import sys
+import copy 
 
 sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
@@ -26,8 +27,9 @@ def locateSoldier(rows):
     return (None, None), None
 
 def traverse(rows):
-    p,d = locateSoldier(rows)
-    i, j = p
+    start,direc = locateSoldier(rows)
+    i, j = start
+    d = direc
     uniqueVisited = 1
     visited = {(i,j):1}
     while True:
@@ -43,7 +45,31 @@ def traverse(rows):
         if (i,j) not in visited:
             visited[(i,j)]=1
             uniqueVisited +=1
-    return uniqueVisited
+    loops = 0
+    for v in visited:
+        rows_cp = copy.deepcopy(rows)
+        print(v)
+        rows_cp[v[0]][v[1]] = '#'
+        i, j = start
+        d = direc
+        trace = {((i,j),d):1}
+        while True:
+            i += d[0]
+            j += d[1]
+            if i<0 or i>=len(rows) or j<0 or j>=len(rows[0]):
+                break
+            elif rows[i][j]=='#':
+                i -= d[0]
+                j -= d[1]
+                d = (d[1],-1*d[0])
+                trace[((i,j),d)]=1
+                continue
+            if ((i,j),d) not in trace:
+                trace[((i,j),d)]=1
+            else:
+                loops +=1
+                break
+    return loops
     
 
 
@@ -63,7 +89,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(2024, 6, [41], main)
+        performTests(2024, 6, [6], main)
     else:
         total = getAnswer(2024, 6, main)
-        print("The number of disctint positions visited is: {0}".format(total))
+        print("The number of positions creating a loop is: {0}".format(total))
