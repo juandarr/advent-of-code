@@ -48,7 +48,6 @@ def traverse(rows):
     loops = 0
     for v in visited:
         rows_cp = copy.deepcopy(rows)
-        print(v)
         rows_cp[v[0]][v[1]] = '#'
         i, j = start
         d = direc
@@ -58,7 +57,7 @@ def traverse(rows):
             j += d[1]
             if i<0 or i>=len(rows) or j<0 or j>=len(rows[0]):
                 break
-            elif rows[i][j]=='#':
+            elif rows_cp[i][j]=='#':
                 i -= d[0]
                 j -= d[1]
                 d = (d[1],-1*d[0])
