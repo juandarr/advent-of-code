@@ -28,7 +28,7 @@ One or more tests can be added and specified for each particular challenge at th
 This year's challenges will be solved in Python again. 
 
 ### Initial goal
-Maybe along the way I will give Mojo or Zig a try. My goal is to solve the challenges of 2024, one day at a time. 
+Maybe along the way I will give Mojo or Zig a try. My goal is to solve the challenges of 2024, one day at a time. I will also review concepts from the algorithms and data structures worlds. Goal is to keep improving in the art of coding.
 
 ## AOC 2023
 Solved every challenge for the year 2023. The code has been categorized in three basic parts: 
