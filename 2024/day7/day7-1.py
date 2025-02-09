@@ -15,14 +15,17 @@ def parseInformation(filename):
     return rows
 
 def checkRow(init, l, val):
+    if init>val:
+        return False
     if len(l)==0:
         if init==val:
             return True
         else:
             return False
     else:
-        s1 =checkRow(init*l[0], l[1:], val)
-        s2 =checkRow(init+l[0], l[1:], val)
+        lCp = l[1:]
+        s1 =checkRow(init*l[0], lCp, val)
+        s2 =checkRow(init+l[0], lCp, val)
     if s1 or s2:
         return True
     else:
