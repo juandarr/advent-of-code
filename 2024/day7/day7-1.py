@@ -12,11 +12,29 @@ def parseInformation(filename):
     for idx,row in enumerate(rows):
         tmp = row.split(':')
         rows[idx] = (int(tmp[0]), list(map(lambda n: int(n), tmp[1][1:].split(' '))))
-    print(rows)
     return rows
 
+def checkRow(init, l, val):
+    if len(l)==0:
+        if init==val:
+            return True
+        else:
+            return False
+    else:
+        s1 =checkRow(init*l[0], l[1:], val)
+        s2 =checkRow(init+l[0], l[1:], val)
+    if s1 or s2:
+        return True
+    else:
+        return False
+    
 def checkOps(rows):
-    return 0
+    total = 0
+    for row in rows:
+        valid = checkRow(row[1][0],row[1][1:], row[0])
+        if valid:
+            total += row[0]
+    return total
 
 def main(filename):
     rows = parseInformation(filename)
