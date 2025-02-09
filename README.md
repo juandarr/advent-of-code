@@ -28,7 +28,10 @@ One or more tests can be added and specified for each particular challenge at th
 This year's challenges will be solved in Python again. 
 
 ### Initial goal
-Maybe along the way I will give Mojo or Zig a try. My goal is to solve the challenges of 2024, one day at a time. I will also review concepts from the algorithms and data structures worlds. Goal is to keep improving in the art of coding.
+Maybe along the way I will give Mojo or Zig a try. My goal is to solve the challenges of 2024, one day at a time. I will also review concepts from algorithms and data structures. Goal is to keep improving in the art of coding.
+
+### Update: Feb 5th, 2025
+I have been working on my old Todo app written in React, with a Django backend. It has been fun, using the new AI systems at the same time. I stopped working on the challenges since a week ago but will continue. I have been using Python, my favorite programming language. It is always easy to come back and write code with easy in it. 
 
 ## AOC 2023
 Solved every challenge for the year 2023. The code has been categorized in three basic parts: 
