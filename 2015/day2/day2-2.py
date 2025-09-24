@@ -17,8 +17,8 @@ def totalRibbon(rows):
     for row in rows:
         dim = row.split('x')
         a,b,c = map(lambda d: int(d), dim)
-        halfPerimeter = [a+b,a+c,b+c]
-        total += 2*min(halfPerimeter)+ a*b*c
+        halfPerimeters = [a+b,a+c,b+c]
+        total += 2*min(halfPerimeters)+ a*b*c
     return total 
 
 def main(filename):

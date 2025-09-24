@@ -17,8 +17,8 @@ def totalSurfaceArea(rows):
     for row in rows:
         dim = row.split('x')
         a,b,c = map(lambda d: int(d), dim)
-        sides = [a*b,a*c, b*c]
-        total += 2*sides[0]+2*sides[1]+2*sides[2]+min(sides)
+        sideAreas = [a*b,a*c, b*c]
+        total += 2*sideAreas[0]+2*sideAreas[1]+2*sideAreas[2]+min(sideAreas)
     return total 
 
 def main(filename):
