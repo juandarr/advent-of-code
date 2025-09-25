@@ -15,20 +15,23 @@ def parseInformation(filename):
 def totalPresents(dirs):
     location = [[0,0], [0,0]]
     visited = [{(0,0):1},{(0,0):1}]
+    houses = {(0,0):1}
     idx = 0 
     for dir in dirs:
         if dir=='>':
             location[idx][0] += 1
         elif dir=='<':
-            location[idx][0]-=1
+            location[idx][0]-= 1
         elif dir=='^':
-            location[idx][1] +=1
+            location[idx][1] += 1
         elif dir=='v':
             location[idx][1] -= 1
         if (location[idx][0],location[idx][1]) not in visited[idx]:
             visited[idx][(location[idx][0],location[idx][1])] = 1
+        if (location[idx][0],location[idx][1]) not in houses:
+            houses[(location[idx][0],location[idx][1])]=1
         idx = abs(idx-1)
-    return len(visited[0])+len(visited[1])
+    return len(houses)
 
 def main(filename):
     dirs = parseInformation(filename)
