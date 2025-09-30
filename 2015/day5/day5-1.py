@@ -58,7 +58,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(2015, 5, [2], main)
+        performTests(2015, 5, [2], main, test=["1"])
     else:
         code = getAnswer(2015, 5, main)
         print("The number of nice strings is {0}".format(code))
