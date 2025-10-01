@@ -23,13 +23,12 @@ def computeLights(instructions):
             for y in range(y1,y2+1):
                 if (x,y) in on:
                     if inst[0]==0:
-                        on[(x,y)] -= 1
+                        if on[(x,y)]>0:
+                            on[(x,y)] -= 1
                     elif inst[0]==1:
                         on[(x,y)] +=1
                     else:
                         on[(x,y)] +=2
-                    if on[(x,y)]==0:
-                        del on[(x,y)]
                 else:
                     if inst[0]==0:
                         pass
