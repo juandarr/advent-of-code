@@ -13,6 +13,34 @@ def parseInformation(filename):
     return instructions
 
 def computeLights(instructions):
+    on = bytearray(10**6)
+    for inst in instructions:
+        x1,y1 = inst[1]
+        x2,y2 = inst[2]
+        width = y2-y1+1
+        if inst[0]=='toggle':
+            for x in range(x1,x2+1):
+                idx_start = x*1000+y1
+                idx_end = idx_start+width
+                for idx in range(idx_start, idx_end):
+                    on[idx] += 2
+        elif inst[0]=='on':
+            for x in range(x1,x2+1):
+                idx_start = x*1000+y1
+                idx_end = idx_start+width
+                for idx in range(idx_start, idx_end):
+                    on[idx] += 1
+        elif inst[0]=='off':
+            for x in range(x1,x2+1):
+                idx_start = x*1000+y1
+                idx_end = idx_start+width
+                for idx in range(idx_start, idx_end):
+                    if on[idx] > 0:
+                        on[idx] -= 1
+    return sum(on)
+
+'''
+def computeLights(instructions):
     on = {}
     for inst in instructions:
         x1,y1 = inst[1]
@@ -38,7 +66,7 @@ def computeLights(instructions):
     for k in on:
         total += on[k]
     return total
-
+'''
 def main(filename):
     instructions = parseInformation(filename)
     totalBrightness = computeLights(instructions)
