@@ -1,6 +1,5 @@
 from os.path import dirname, abspath
 import sys
-import hashlib
 
 sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 from utils import performTests, getAnswer  # noqa E402
@@ -9,8 +8,8 @@ from utils import performTests, getAnswer  # noqa E402
 def parseInformation(filename):
     file = open(filename, "r")
     data = file.read()
-    rawInstructions = data.rstrip().split('\n')
-    instructions = [[1 if 'turn on' in i else (0 if 'turn off' in i else -1), i.split(' through ')[0].split(' ')[-1],i.split(' through ')[-1]] for i in rawInstructions]
+    rawInstructions = [s.split(' ') for s in data.rstrip().split('\n')]
+    instructions = [[i[1],i[2],i[4]] if len(i)==5 else [i[0],i[1], i[3]] for i in rawInstructions]
     return instructions
 
 
@@ -22,12 +21,12 @@ def computeLights(instructions):
         for x in range(x1,x2+1):
             for y in range(y1,y2+1):
                 if (x,y) in on:
-                    if inst[0]==0 or inst[0]==-1:
+                    if inst[0]=='off' or inst[0]=='toggle':
                         del on[(x,y)]
                     else:
                         pass
                 else:
-                    if inst[0]==0:
+                    if inst[0]=='off':
                         pass
                     else:
                         on[(x,y)]=1
