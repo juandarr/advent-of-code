@@ -11,25 +11,43 @@ def parseInformation(filename):
     instructions = [[i[1],[int(v) for v in i[2].split(',')],[int(v) for v in i[4].split(',')]] if len(i)==5 else [i[0],[int(v) for v in i[1].split(',')], [int(v) for v in i[3].split(',')]] for i in rawInstructions]
     return instructions
 
+def computeLights(instructions):
+    grid = bytearray(1_000_000)
+    for action, x1, y1, x2, y2 in instructions:
+        width = y2 - y1 + 1
+        if action == "toggle":
+            for x in range(x1, x2 + 1):
+                row_start = x * 1000 + y1
+                row_end = row_start + width
+                for idx in range(row_start, row_end):
+                    grid[idx] ^= 1
+        else:
+            row_value = (b"\x01" if action == "on" else b"\x00") * width
+            for x in range(x1, x2 + 1):
+                row_start = x * 1000 + y1
+                row_end = row_start + width
+                grid[row_start:row_end] = row_value
+    return sum(grid)
 
 def computeLights(instructions):
-    on = {}
+    on = bytearray(10**6)
     for inst in instructions:
         x1,y1 = inst[1]
         x2,y2 = inst[2]
-        for x in range(x1,x2+1):
-            for y in range(y1,y2+1):
-                if (x,y) in on:
-                    if inst[0]=='off' or inst[0]=='toggle':
-                        del on[(x,y)]
-                    else:
-                        pass
-                else:
-                    if inst[0]=='off':
-                        pass
-                    else:
-                        on[(x,y)]=1
-    return len(on)
+        width = y2-y1+1
+        if inst[0]=='toggle':
+            for x in range(x1,x2+1):
+                idx_start = x*1000+y1
+                idx_end = idx_start+width
+                for idx in range(idx_start, idx_end):
+                    on[idx] ^= 1
+        else:
+            vals = (b"\x01" if inst[0]=='on' else b"\x00")*width
+            for x in range(x1,x2+1):
+                idx_start = x*1000+y1
+                idx_end = idx_start+width
+                on[idx_start:idx_end] = vals
+    return sum(on)
 
 def main(filename):
     instructions = parseInformation(filename)
@@ -48,6 +66,6 @@ if __name__ == "__main__":
     if test:
         performTests(2015, 6, [10**6,10**3,0], main)
     else:
-        code = getAnswer(2015, 6, main)
-        print("The number of lights lit is {0}".format(code))
+        total = getAnswer(2015, 6, main)
+        print("The number of lights lit is {0}".format(total))
 
