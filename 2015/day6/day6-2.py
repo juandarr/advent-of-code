@@ -9,14 +9,14 @@ def parseInformation(filename):
     file = open(filename, "r")
     data = file.read()
     rawInstructions = [s.split(' ') for s in data.rstrip().split('\n')]
-    instructions = [[i[1],i[2],i[4]] if len(i)==5 else [i[0],i[1], i[3]] for i in rawInstructions]
+    instructions = [[i[1],[int(v) for v in i[2].split(',')],[int(v) for v in i[4].split(',')]] if len(i)==5 else [i[0],[int(v) for v in i[1].split(',')], [int(v) for v in i[3].split(',')]] for i in rawInstructions]
     return instructions
 
 def computeLights(instructions):
     on = {}
     for inst in instructions:
-        x1,y1 = map(lambda d: int(d),inst[1].split(',') )
-        x2,y2 = map(lambda d: int(d),inst[2].split(',') )
+        x1,y1 = inst[1]
+        x2,y2 = inst[2]
         for x in range(x1,x2+1):
             for y in range(y1,y2+1):
                 if (x,y) in on:
