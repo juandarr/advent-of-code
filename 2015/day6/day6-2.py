@@ -39,34 +39,6 @@ def computeLights(instructions):
                         on[idx] -= 1
     return sum(on)
 
-'''
-def computeLights(instructions):
-    on = {}
-    for inst in instructions:
-        x1,y1 = inst[1]
-        x2,y2 = inst[2]
-        for x in range(x1,x2+1):
-            for y in range(y1,y2+1):
-                if (x,y) in on:
-                    if inst[0]=='off':
-                        if on[(x,y)]>0:
-                            on[(x,y)] -= 1
-                    elif inst[0]=='on':
-                        on[(x,y)] +=1
-                    else:
-                        on[(x,y)] +=2
-                else:
-                    if inst[0]=='off':
-                        pass
-                    elif inst[0]=='on':
-                        on[(x,y)]=1
-                    else:
-                        on[(x,y)]=2
-    total = 0
-    for k in on:
-        total += on[k]
-    return total
-'''
 def main(filename):
     instructions = parseInformation(filename)
     totalBrightness = computeLights(instructions)
