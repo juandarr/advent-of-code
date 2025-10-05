@@ -11,18 +11,52 @@ def parseInformation(filename):
     return wirings
 
 def computeWirings(wirings):
-    print(wirings)
     d = {}
     idx = len(wirings)-1
     while (idx >= 0):
         w = wirings[idx]
         if len(w)==3:
-            d[w[2]] = int(w[0])
-            wirings.remove(idx)
+            if w[0].isdigit():
+                d[w[2]] = int(w[0])
+                wirings.pop(idx)
         idx -=1
-    print(d)
-    print(wirings)
-    return 0
+    while len(wirings)>0:
+        idx = len(wirings)-1
+        while (idx >= 0):
+            w = wirings[idx]
+            if len(w)==3:
+                if w[0] in d:
+                    d[w[2]] = int(d[w[0]])
+                    wirings.pop(idx) 
+            elif len(w)==4:
+                if w[1] in d:
+                    v = ~d[w[1]]
+                    d[w[3]] = 65536+v
+                    wirings.pop(idx) 
+            else:
+                if w[0] in d:
+                    if w[1]=='RSHIFT':
+                        d[w[4]] = d[w[0]] >>  int(w[2])
+                        wirings.pop(idx) 
+                    elif w[1]=='LSHIFT':
+                        d[w[4]] = d[w[0]] << int(w[2])
+                        wirings.pop(idx) 
+                    else:
+                        if w[2] in d:
+                            if w[1]=='AND':
+                                d[w[4]] = d[w[0]] & d[w[2]]
+                            elif w[1]=='OR':
+                                d[w[4]] = d[w[0]] | d[w[2]]
+                            wirings.pop(idx) 
+                if  w[0].isdigit():
+                    if w[2] in d:
+                        if w[1]=='AND':
+                            d[w[4]] = int(w[0]) & d[w[2]]
+                        elif w[1]=='OR':
+                            d[w[4]] = int(w[0]) | d[w[2]]
+                        wirings.pop(idx) 
+            idx -=1
+    return d['a']
 
 
 def main(filename):
@@ -40,7 +74,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(2015, 7, [0], main)
+        performTests(2015, 7, [65079], main)
     else:
         signal = getAnswer(2015, 7, main)
         print("The signal for wire a is {0}".format(signal))
