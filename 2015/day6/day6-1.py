@@ -12,24 +12,6 @@ def parseInformation(filename):
     return instructions
 
 def computeLights(instructions):
-    grid = bytearray(1_000_000)
-    for action, x1, y1, x2, y2 in instructions:
-        width = y2 - y1 + 1
-        if action == "toggle":
-            for x in range(x1, x2 + 1):
-                row_start = x * 1000 + y1
-                row_end = row_start + width
-                for idx in range(row_start, row_end):
-                    grid[idx] ^= 1
-        else:
-            row_value = (b"\x01" if action == "on" else b"\x00") * width
-            for x in range(x1, x2 + 1):
-                row_start = x * 1000 + y1
-                row_end = row_start + width
-                grid[row_start:row_end] = row_value
-    return sum(grid)
-
-def computeLights(instructions):
     on = bytearray(10**6)
     for inst in instructions:
         x1,y1 = inst[1]
