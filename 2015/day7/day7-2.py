@@ -19,10 +19,11 @@ def computeWirings(wirings):
             if w[0].isdigit():
                 if w[2]=='b':
                     d[w[2]] = 3176
+                else:
+                    d[w[2]] = int(w[0])
                 wirings.pop(idx)
         idx -=1
     while len(wirings)>0:
-        print(wirings)
         idx = len(wirings)-1
         while (idx >= 0):
             w = wirings[idx]
