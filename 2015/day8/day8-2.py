@@ -15,8 +15,8 @@ def parseInformation(filename):
 
 def getDiff(strs):
     total = 0
-    for s in strs: 
-        total += 2
+    for idx,s in enumerate(strs): 
+        total += 4
         tmp = s[1:-1]
         rawStrs = [r'\\\\',r'\\\"',r'\\x[0-9,a,b,c,d,e,f]{2}']
         reps = []
@@ -24,9 +24,9 @@ def getDiff(strs):
             positions = re.findall(rawStr,tmp)
             reps.append( positions)
             if rule==2:
-                total += 3*len(positions)
+                total += 1*len(positions)
             else:
-                total +=1*len(positions)
+                total +=2*len(positions)
     return total
 
 def main(filename):
@@ -44,7 +44,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(2015, 8, [12], main, test=["1"])
+        performTests(2015, 8, [19], main, test=["1"])
     else:
         dif = getAnswer(2015, 8, main)
         print("The difference between number of characters of code and characters in memory is {0}".format(dif))
