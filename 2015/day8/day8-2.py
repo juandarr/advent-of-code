@@ -15,7 +15,7 @@ def parseInformation(filename):
 
 def getDiff(strs):
     total = 0
-    for idx,s in enumerate(strs): 
+    for s in strs: 
         total += 4
         tmp = s[1:-1]
         rawStrs = [r'\\\\',r'\\\"',r'\\x[0-9,a,b,c,d,e,f]{2}']
