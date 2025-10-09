@@ -19,10 +19,8 @@ def getDiff(strs):
         total += 4
         tmp = s[1:-1]
         rawStrs = [r'\\\\',r'\\\"',r'\\x[0-9,a,b,c,d,e,f]{2}']
-        reps = []
         for rule,rawStr in enumerate(rawStrs):
             positions = re.findall(rawStr,tmp)
-            reps.append( positions)
             if rule==2:
                 total += 1*len(positions)
             else:
