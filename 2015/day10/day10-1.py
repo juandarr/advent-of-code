@@ -10,12 +10,29 @@ def parseInformation(filename):
     file = open(filename, "r")
     data = file.read()
     rows = [row.split(' ') for row in data.rstrip().split('\n')]
-    print(rows)
-    return rows 
+    return rows[0] 
 
 
-def iterateCalls(rows):
-    return 0 
+def iterateCalls(row):
+    start, it = row
+    cur = start
+    for i in range(int(it)):
+        tmp = ''
+        prev = ''
+        counter = 0
+        for c in cur:
+            if prev==c:
+                counter += 1
+            else:
+                if prev!='':
+                    tmp += str(counter)+prev
+                counter = 1
+            prev = c
+        tmp += str(counter)+prev
+        ratio = len(tmp)/len(cur)
+        cur = tmp
+
+    return len(cur) 
 
 def main(filename):
     rows = parseInformation(filename)
