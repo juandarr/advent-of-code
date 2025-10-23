@@ -55,6 +55,9 @@ def incrementPassword(p):
     while(carry==1 and i>=0):
         p[i]+= 1
         if p[i]==123:
+            if i==0:
+                p[i] = 122
+                break
             p[i]=97
             carry = 1
         else:
