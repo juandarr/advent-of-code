@@ -12,11 +12,11 @@ def parseInformation(filename):
     rows = [row.split(' ') for row in data.rstrip().split('\n')]
     return rows[0] 
 
-def passwordValidity(seqRev, password):
+def passwordValidity(password):
     passRule1 = False
     i = 0
-    while (i<len(password)-3):
-        if seqRev[password[i]]-seqRev[password[i+1]]==1 and seqRev[password[i+1]]-seqRev[password[i+2]]==1:
+    while (i<len(password)-2):
+        if password[i+1]-password[i]==1 and password[i+2]-password[i+1]==1:
             passRule1= True
             break 
         i += 1
@@ -24,7 +24,7 @@ def passwordValidity(seqRev, password):
         return False
 
     passRule2 = True
-    bannedLetters = ['i','o','l']
+    bannedLetters = [ord('i'),ord('o'),ord('l')]
     t = set(password)
     for c in t:
         if c in bannedLetters:
@@ -33,15 +33,14 @@ def passwordValidity(seqRev, password):
     if not(passRule2):
         return False
 
-
     passRule3 = False
     pairs = 0
     i = 0
-    while (i<len(password)-2):
-        if seqRev[password[i]]==seqRev[password[i+1]]:
+    while (i<len(password)-1):
+        if password[i]==password[i+1]:
             pairs += 1
             if pairs == 2:
-                passRule1= True
+                passRule3= True
                 break 
             i += 2
         else:
@@ -50,24 +49,26 @@ def passwordValidity(seqRev, password):
         return False
     return True
 
-
+def incrementPassword(p):
+    i = len(p)-1
+    carry = 1
+    while(carry==1 and i>=0):
+        p[i]+= 1
+        if p[i]==123:
+            p[i]=97
+            carry = 1
+        else:
+            carry = 0
+        i-=1
 
 def passwordSequence(data):
-    seq = {}
-    seqRev = {}
-    for i in range(97,150):
-        c = chr(i)
-        seq[i-97]=c
-        seqRev[c]=i-97
-        if c=='z':
-            break
-    print(seq)
-    p1 = 'abcdffaa'
-    val = passwordValidity(seqRev,p1)
-    p2 = 'ghjaabcc'
-    val2 = passwordValidity(seqRev, p2)
-    print(p1,val,p2,val2)
-    return 0
+    # Starting value a=97, end value z=122
+    s = [ord(i) for i in data[0]]
+    while not(passwordValidity(s)):
+        incrementPassword(s)
+    key = [chr(i) for i in s]
+    key = ''.join(key)
+    return key 
 
 def main(filename):
     data = parseInformation(filename)
@@ -84,7 +85,7 @@ if __name__ == "__main__":
         raise Exception('Wrong argument, expected "test" or "main"')
 
     if test:
-        performTests(2015, 11, ['abcdffaa','ghjaabcc'], main, test=[])
+        performTests(2015, 11, ['abcdffaa','ghjaabcc'], main)
     else:
         iterations = getAnswer(2015, 11, main)
         print("Given current Santa's password next password is {0}".format(iterations))
