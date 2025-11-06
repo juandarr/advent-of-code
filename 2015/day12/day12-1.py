@@ -27,7 +27,6 @@ def addNumbers(s):
 
 def main(filename):
     s = parseInformation(filename)
-    print(s)
     net = addNumbers(s)
     return net
 
@@ -44,4 +43,4 @@ if __name__ == "__main__":
         performTests(2015, 12, [12,6,0,0], main)
     else:
         iterations = getAnswer(2015, 12, main)
-        print("Given current Santa's password next password is {0}".format(iterations))
+        print("The total sum of values in the JSON string is {0}".format(iterations))
