@@ -12,7 +12,18 @@ def parseInformation(filename):
     return data.rstrip() 
 
 def addNumbers(s):
-    return 0
+    tmp = ''
+    total = 0
+    idx = 0
+    while idx<len(s):
+        while s[idx].isdigit() or s[idx]=='-':
+            tmp += s[idx]
+            idx+=1
+        if tmp !='':
+            total += int(tmp)  
+            tmp = ''
+        idx +=1
+    return total
 
 def main(filename):
     s = parseInformation(filename)
