@@ -1,6 +1,6 @@
 # Advent of Code
 
-This repository collects all input files, solutions, template algorithms, data structures and other supporting information used to solve the [Advent of code](https://adventofcode.com) challenges in different years: 2022, 2023. A generic script was written to run tests and main problem for a given year, day and challenge.
+This repository collects all input files, solutions, template algorithms, data structures and other supporting information used to solve the [Advent of code](https://adventofcode.com) challenges in different years: 2022, 2023, 2015 (12/24 so far), 2024 (7/24). A generic script was written to run tests and main problem for a given year, day and challenge.
 
 ## Run script
 
@@ -76,12 +76,12 @@ I solved every challenge for the year 2022. The code has been categorized in thr
 I started learning the programming language Go. It is a typed, compiled programming language developed by Google. It was design with conconcurrency in mind. It is widely used in web development as a backend language and has a special place in the world of cloud computing.Its performance is superior to interpreted languages such as Python, Ruby or Javascript.
 First program of the AOC 2022 challenge was written in Go. More programs will be written in Go in the future.
 
-## AOC 2015
+## AOC 2015 
 
-Started to solve challenge from Advent Of Code 2015. 9 problems have been solved so dar. Each solution is categorized in three basic parts:
+Started to solve challenge from Advent Of Code 2015. 12 problems have been solved so far. Each solution is categorized in three basic parts:
 
 - parseInformation function
 - the algorithm
 - main function putting eveything together.
 
-Using the same solution structure used in previous challenges.
+Using the same solution structure used in previous challenges. Python is the main programming language being used in this challenge. 
