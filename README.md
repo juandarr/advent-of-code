@@ -76,12 +76,16 @@ I solved every challenge for the year 2022. The code has been categorized in thr
 I started learning the programming language Go. It is a typed, compiled programming language developed by Google. It was design with conconcurrency in mind. It is widely used in web development as a backend language and has a special place in the world of cloud computing.Its performance is superior to interpreted languages such as Python, Ruby or Javascript.
 First program of the AOC 2022 challenge was written in Go. More programs will be written in Go in the future.
 
-## AOC 2015 
+## AOC 2015
 
-Started to solve challenge from Advent Of Code 2015. 12 problems have been solved so far. Each solution is categorized in three basic parts:
+Started to solve challenge from Advent Of Code 2015. 12 problems have been solved so far. Problem 13 in progress. Goal is to complete 2015. Then 2024 and move to the latest challenge, 2025.
+
+### Solutions
+
+Each solution is categorized in three basic parts:
 
 - parseInformation function
 - the algorithm
 - main function putting eveything together.
 
-Using the same solution structure used in previous challenges. Python is the main programming language being used in this challenge. 
+Using the same solution structure used in previous challenges. Python is the main programming language being used in this challenge.
