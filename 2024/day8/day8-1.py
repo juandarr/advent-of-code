@@ -11,7 +11,8 @@ def parseInformation(filename):
     rows = str.split('\n')
     m = []
     for row in rows:
-        m.append(row.split())
+        m.append(list(row))
+    print(m)
     return m
 
 def checkRow():
