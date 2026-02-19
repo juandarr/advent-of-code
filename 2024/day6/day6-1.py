@@ -9,9 +9,10 @@ def parseInformation(filename):
     file = open(filename, "r")
     str = file.read()
     rows = str.split('\n')
+    tmp = []
     for idx,row in enumerate(rows):
-        rows[idx] = list(row)
-    return rows
+        tmp.append(list(row))
+    return tmp
 
 def locateSoldier(rows):
     i= 0

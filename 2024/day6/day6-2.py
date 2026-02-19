@@ -10,9 +10,10 @@ def parseInformation(filename):
     file = open(filename, "r")
     str = file.read()
     rows = str.split('\n')
-    for idx,row in enumerate(rows):
-        rows[idx] = list(row)
-    return rows
+    tmp = []
+    for row in rows:
+        tmp.append(list(row))
+    return tmp
 
 def locateSoldier(rows):
     i= 0
@@ -47,6 +48,8 @@ def traverse(rows):
             uniqueVisited +=1
     loops = 0
     for v in visited:
+        if v==start:
+            continue
         rows_cp = copy.deepcopy(rows)
         rows_cp[v[0]][v[1]] = '#'
         i, j = start
