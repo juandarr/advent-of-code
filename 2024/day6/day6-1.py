@@ -10,7 +10,7 @@ def parseInformation(filename):
     str = file.read()
     rows = str.split('\n')
     tmp = []
-    for idx,row in enumerate(rows):
+    for row in rows:
         tmp.append(list(row))
     return tmp
 
