@@ -11,18 +11,25 @@ def parseInformation(filename):
     rows = str.split('\n')
     return [list(row) for row in  rows]
 
-def traverseMap(pos, rows, dirs, inc):
-    score = 0 
-    for d in dirs:
-        i = pos[0]+d[0]
-        j = pos[1]+d[1]
-        if (i<0 or i>=len(rows) or j<0 or j>=len(rows[0])): 
-            continue
-        if rows[i][j]==rows[pos[0]][pos[1]]+1:
-            if rows[i][j]==9:
-                score += 1
-            else:
-                score += traverseMap((i,j), rows, dirs)
+def traverseMap(pos, rows):
+    toExpand = [pos]
+    visited = {}
+    score = 0
+    dirs = [(0,1),(0,-1),(1,0),(-1,0)]
+    while len(toExpand)>0:
+        p = toExpand.pop()
+        for d in dirs:
+            i = p[0]+d[0]
+            j = p[1]+d[1]
+            if (i<0 or i>=len(rows) or j<0 or j>=len(rows[0])): 
+                continue
+            if rows[i][j]==rows[p[0]][p[1]]+1:
+                if rows[i][j]==9 and (i,j) not in visited:
+                    visited[(i,j)]=1
+                    score += 1
+                else:
+                    toExpand.append((i,j))
+    return score
 
 def checkScoreSum(rows):
     startSet = []
@@ -33,7 +40,7 @@ def checkScoreSum(rows):
                 startSet.append((i,j))
     totalScore = 0
     for start in startSet:
-        totalScore += traverseMap(start, rows, dirs)
+        totalScore += traverseMap(start, rows)
     return totalScore
 
 def main(filename):
