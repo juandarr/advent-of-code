@@ -32,11 +32,7 @@ def runComputer():
         if index < 0:
             return curA<<3
         for offset in range(8):
-            if index==len(targetValues)-1:
-                a = offset
-            else:
-                a = (curA << 3) | offset
-
+            a = (curA << 3) | offset
             out = a % 8
             if out==targetValues[index]:
                 result = expansion(index-1, a)
