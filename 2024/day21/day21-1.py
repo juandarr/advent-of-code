@@ -21,18 +21,21 @@ def combine(routes):
         newPaths = []
         for j in range(len(routes[depth])):
             for p in paths:
-                tmp = p+routes[depth][j]
-                newPaths.append(tmp)
+                newPaths.append(p+routes[depth][j])
         paths = newPaths
     return paths
             
 
-def possiblePaths(start,target,t):
+def possiblePaths(start,target,isNumeric=False):
+    global memo
+    state_key=(start,target,isNumeric)
+    if state_key in memo:
+        return memo[state_key]
     if start==target:
         return ['A']
     dirs = {(0,1):'>',(0,-1):'<',(1,0):'v',(-1,0):'^'}
-    bannedNode = (3,0) if t=='numeric' else (0,0)
-    lims = (4,3) if t=='numeric' else (2,3)
+    bannedNode = (3,0) if isNumeric else (0,0)
+    lims = (4,3) if isNumeric else (2,3)
     toExplore = [(-(abs(start[0]-target[0])+abs(start[1]-target[1])),start,'')]
     possiblePaths = []
     while toExplore:
@@ -49,42 +52,33 @@ def possiblePaths(start,target,t):
                 possiblePaths.append(curPath+dirs[d]+'A')
             elif newCost < curCost:
                 heapq.heappush(toExplore, (-newCost, newNode, curPath+dirs[d]))
+    memo[state_key] = possiblePaths
     return possiblePaths
 
 def simulation(codes):
     numPad = {'7':(0,0),'8':(0,1),'9':(0,2),'4':(1,0),'5':(1,1),'6':(1,2),'1':(2,0), '2':(2,1),'3':(2,2),'0':(3,1),'A':(3,2)}
     dirPad ={'^':(0,1),'A':(0,2),'<':(1,0),'v':(1,1),'>':(1,2)}
 
-    # Tuples defined by (controller_type, starting_position)
-    stages = [('numeric',(3,2)),('dirs',(0,2)),('dirs',(0,2))]
+    stages = ['numeric','dirs','dirs']
     total = 0
-
+    global memo
     memo = {}
     for code in codes:
-        patterns= [code]
+        patterns = [code]
         mini = float('inf')
         for stage in stages: 
             newPatterns = []
-            cur= stage[1]
+            isNumeric = stage=='numeric'
+            pad = numPad if isNumeric else dirPad
+            cur= pad['A']
             for pattern in patterns:
                 routes = []
                 for c in pattern:
-                    if stage[0]=='numeric':
-                        target = numPad[c]
-                    else:
-                        target= dirPad[c] 
-                    if (cur,target) in memo:
-                        found = memo[(cur,target)]
-                    else:
-                        found = possiblePaths(cur,target,stage[0])
-                        memo[(cur,target)] = found
+                    target = pad[c]
+                    found = possiblePaths(cur,target,isNumeric)
                     routes.append(found)
                     cur = target
-                if pattern in memo:
-                    paths = memo[pattern]
-                else:
-                    paths = combine(routes)
-                    memo[pattern] =paths
+                paths = combine(routes)
                 newPatterns.extend(paths)
             patterns = newPatterns
         for p in patterns:
