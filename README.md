@@ -29,7 +29,7 @@ This instruction will execute the `test` problem of day `1`, challenge `1` of ye
 
 One or more tests can be added and specified for each particular challenge at the main execution section of the challenge's file. For more information, explore the utils file, `performTests` function.
 
-## AOC 2024
+## Current: AOC 2024
 
 This year's challenges will be solved in Python again.
 
@@ -37,9 +37,24 @@ This year's challenges will be solved in Python again.
 
 Maybe along the way I will give Mojo or Zig a try. My goal is to solve the challenges of 2024, one day at a time. I will also review concepts from algorithms and data structures. Goal is to keep improving in the art of coding.
 
-### Update: Feb 5th, 2025
+### Updates
 
-I have been working on my old Todo app written in React, with a Django backend. It has been fun, using the new AI systems at the same time. I stopped working on the challenges since a week ago but will continue. I have been using Python, my favorite programming language. It is always easy to come back and write code with easy in it.
+- Feb 5th, 2025: I have been working on my old Todo app written in React, with a Django backend. It has been fun, using the new AI systems at the same time. I stopped working on the challenges since a week ago but will continue. I have been using Python, my favorite programming language. It is always easy to come back and write code with easy in it.
+- March 20, 2026: Challenges have been solved. Will review the solutions for each day and see how the code can be improved and the algorithms/data structures used.
+
+## Next: AOC 2015
+
+Started to solve challenge from Advent Of Code 2015. 12 problems have been solved so far. Problem 13 in progress. Goal is to complete 2015. Then 2024 and move to the latest challenge, 2025.
+
+### Solutions
+
+Each solution is categorized in three basic parts:
+
+- parseInformation function
+- the algorithm
+- main function putting eveything together.
+
+Using the same solution structure used in previous challenges. Python is the main programming language being used in this challenge.
 
 ## AOC 2023
 
@@ -75,17 +90,3 @@ I solved every challenge for the year 2022. The code has been categorized in thr
 
 I started learning the programming language Go. It is a typed, compiled programming language developed by Google. It was design with conconcurrency in mind. It is widely used in web development as a backend language and has a special place in the world of cloud computing.Its performance is superior to interpreted languages such as Python, Ruby or Javascript.
 First program of the AOC 2022 challenge was written in Go. More programs will be written in Go in the future.
-
-## AOC 2015
-
-Started to solve challenge from Advent Of Code 2015. 12 problems have been solved so far. Problem 13 in progress. Goal is to complete 2015. Then 2024 and move to the latest challenge, 2025.
-
-### Solutions
-
-Each solution is categorized in three basic parts:
-
-- parseInformation function
-- the algorithm
-- main function putting eveything together.
-
-Using the same solution structure used in previous challenges. Python is the main programming language being used in this challenge.
