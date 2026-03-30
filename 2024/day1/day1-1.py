@@ -15,21 +15,21 @@ def parseInformation(filename):
         tmp = row.split("   ")
         a.append(int(tmp[0]))
         b.append(int(tmp[1]))
-    return [a,b]
+    return [a, b]
 
 
-def sumDifference(l):
+def sumDifference(lists):
     total = 0
-    a = sorted(l[0])
-    b = sorted(l[1])
+    a = sorted(lists[0])
+    b = sorted(lists[1])
     for i in range(len(a)):
-        total += abs(a[i]-b[i])
+        total += abs(a[i] - b[i])
     return total
 
 
 def main(filename):
-    l = parseInformation(filename)
-    total = sumDifference(l)
+    lists: list[int] = parseInformation(filename)
+    total = sumDifference(lists)
     return total
 
 
